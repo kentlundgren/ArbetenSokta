@@ -70,6 +70,28 @@ reserv medan bytet gjordes.
 **Sista steget:** den gamla fjärrgrenen `main` är borttagen
 (`git push origin --delete main`). Bara `public` finns kvar på GitHub.
 
+**Bekräftelse, sett direkt på `github.com/kentlundgren/ArbetenSokta`:**
+
+![Repot visar bara en gren, "public"](bara_public_branch.jpg)
+
+Vad bilden faktiskt visar, tolkat rad för rad:
+
+- **"1 Branch · 0 Tags"** – längst upp till höger om grenväljaren. Bara en
+  gren finns i hela repot. Ingen `main` kvar att förväxla den med.
+- **Grenväljaren** ("public", med en gren-ikon bredvid) visar namnet på den
+  enda grenen, och att den redan är vald/aktiv, det är standardvyn nu, inte
+  något man behöver leta upp.
+- **Commit-raden** ("Uppdatera index.html och README.md med ny badge för
+  g...") är den senaste committen som faktiskt hamnat på GitHub, författad av
+  `kentlundgren`, inte av Claude, i linje med att Kent alltid committar och
+  pushar själv.
+- **Filträdet** under (`Skills/humanizer`, `README.md`, `index.html`) visar
+  exakt den vitlistade mängden filer, ingenting utöver det.
+
+Detta är det konkreta beviset att hela mekanismen, orphan-grenen, spärren,
+namnbytet, faktiskt höll ihop från början till slut: en enda publik gren, med
+en enda avsedd samling filer, inget annat läckte igenom.
+
 ## En synlig etikett på sidan, med en viktig begränsning
 
 Live-sidan (`index.html`) har nu en liten badge uppe till vänster, "⑂ public",

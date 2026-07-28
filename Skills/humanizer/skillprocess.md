@@ -32,19 +32,28 @@ git commit -m "Publicera humanizer-skillet"
 git checkout main                      # tillbaka till vardagsarbetet
 ```
 
-**2. En pre-push-hook som teknisk spärr.** En git-hook (`.githooks/pre-push`) körs
+**2. En pre-push-hook som teknisk spärr.** En git-hook (`.git/hooks/pre-push`) körs
 automatiskt varje gång `git push` anropas, innan något skickas iväg. Den kontrollerar:
 
 - Är grenen som pushas exakt `github-public`? Om inte: avbryt.
-- Innehåller den grenen bara de tillåtna filerna? Om inte: avbryt.
-
-```bash
-git config core.hooksPath .githooks    # aktiverar hook-mappen i detta repo
-```
+- Innehåller den grenen bara filer från en vitlista (`ALLOWED_FILES` i hook-skriptet)?
+  Om inte: avbryt.
 
 Skillnaden mot att bara skriva en regel i CLAUDE.md: en regel kan glömmas eller
 missförstås. En hook som avbryter kommandot fungerar likadant oavsett vem (Kent eller
 Claude) som råkar skriva `git push origin main`.
+
+**Fallgrop, upptäckt under testet:** hook-skriptet låg först i en spårad mapp
+(`.githooks/`, aktiverad via `git config core.hooksPath .githooks`) för att vara
+läsbar och versionshanterad. Men den mappen finns bara på grenen `main`, inte på
+`github-public`, orphan-grenen känner inte till den. Resultatet: spärren fungerade
+när jag testade från `main`, men var helt frånvarande, kördes aldrig, exakt när man
+faktiskt står på `github-public` och pushar på riktigt. Fixen: den aktiva hooken
+måste ligga i `.git/hooks/pre-push`, som inte är en del av någon gren utan alltid
+finns oavsett vad som är utcheckat. En läsbar kopia kan fortfarande sparas spårad
+(t.ex. i `.githooks/`) som referens, men den aktiva versionen måste ligga utanför
+grenarnas räckvidd. Testat på nytt, från `github-public`, efter fixen: spärren
+fungerar nu i den situation den faktiskt behövs.
 
 **3. Verifierat mot en låtsas-server innan något riktigt GitHub-repo fanns.** Innan
 `kentlundgren/ArbetenSokta` skapades på GitHub testades spärren mot ett tillfälligt,
@@ -61,7 +70,7 @@ Just nu, uteslutande innehållet i grenen `github-public`:
 
 - `Skills/humanizer/SKILL.md`
 - `Skills/humanizer/skillprocess.md` (den här filen)
-- `Skills/humanizer/<skärmdump av grenbytet i Cursor>`
+- `Skills/humanizer/Cursor_bytte_from_main_till_github-public.jpg` (skärmdump av grenbytet)
 
 Allt annat i `ArbetenSokta`, inklusive `controlleransokan`- och
 `intervjuforbredelse`-skillsen (som innehåller kontaktuppgifter och en

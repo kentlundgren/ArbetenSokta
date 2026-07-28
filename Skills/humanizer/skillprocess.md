@@ -1,4 +1,4 @@
-# Hur en enda fil blir publik ur ett repo fullt av personliga filer
+# Hur enstaka filer blir publika ur ett repo fullt av personliga filer
 
 Det här dokumentet beskriver hur `ArbetenSokta`, ett repo med jobbansökningar, CV och
 personlighetstester, kan ha exakt en publik fil på GitHub, `Skills/humanizer/SKILL.md`,

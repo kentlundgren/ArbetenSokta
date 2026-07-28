@@ -92,6 +92,66 @@ Detta är det konkreta beviset att hela mekanismen, orphan-grenen, spärren,
 namnbytet, faktiskt höll ihop från början till slut: en enda publik gren, med
 en enda avsedd samling filer, inget annat läckte igenom.
 
+## Kommandon för att se grennamnen
+
+Tre kommandon, olika räckvidd:
+
+**`git branch`** – bara lokala grenar, stjärnan visar vilken man står på:
+```
+* github-public
+  main
+```
+
+**`git branch -a`** – lokala grenar plus de fjärrgrenar datorn känner till (en
+cachad bild, uppdateras vid fetch/push/pull, inte alltid helt färsk):
+
+![git branch -a i terminalen](git_banch-_a.jpg)
+
+```
+* github-public
+  main
+  remotes/origin/public
+```
+
+**`git ls-remote --heads origin`** – frågar GitHub direkt istället för att lita
+på den lokala cachen, alltid aktuellt:
+```
+0a706a0...	refs/heads/public
+```
+
+## Vad grenarna faktiskt heter, som begrepp
+
+"Global gren" är inte den vedertagna termen, även om den är begriplig. De rätta
+orden:
+
+| Term | Vad det är | Exempel här |
+|---|---|---|
+| **Lokal gren** (local branch) | Finns bara på din dator. | `main`, `github-public` |
+| **Fjärrspårande gren** (remote-tracking branch) | En lokal *bokmärkning* av var en fjärrgren senast sågs, inte fjärrgrenen själv. Syns som `remotes/origin/...` i `git branch -a`. | `remotes/origin/public` |
+| **Fjärrgren** (remote branch) | Den faktiska grenen som ligger på servern (GitHub). Det är den här man menar med "global". | `public`, på `github.com/kentlundgren/ArbetenSokta` |
+
+## Är två lokala grenar och en fjärrgren ovanligt?
+
+Nej, tvärtom, men det specifika sättet vi använt det på har en känd förlaga.
+
+Att ha flera lokala grenar samtidigt (en för det man jobbar med, en eller flera
+för annat) är helt vardagligt i git, det är hela poängen med grenar. Det som är
+mer specifikt för just den här lösningen är **orphan-grenen som bara innehåller
+ett urval filer, avsedd att publiceras separat från huvudarbetet**. Det mönstret
+har en direkt motsvarighet i git-världen: `gh-pages`-grenen, som länge var
+GitHub:s egna rekommenderade sätt att bygga en GitHub Pages-sida. Många projekt
+har historiskt haft exakt den strukturen, en `main`-gren för koden och en
+fristående `gh-pages`-gren (ofta en orphan-gren) bara för det som ska visas
+publikt. Det vi byggt är samma grundidé, anpassad för att filtrera bort
+personuppgifter snarare än att separera byggd dokumentation från källkod.
+
+Det som är mindre vanligt, och ett medvetet val här: att den lokala grenen
+(`github-public`) och fjärrgrenen (`public`) heter olika saker. Vanligtvis
+namnger man dem lika för enkelhetens skull. Här blev det olika namn av en
+historisk anledning (fjärrgrenen hette ursprungligen "main", vilket krockade
+med den lokala privata `main`-grenen, se ovan), inte som ett generellt råd att
+följa i andra projekt.
+
 ## En synlig etikett på sidan, med en viktig begränsning
 
 Live-sidan (`index.html`) har nu en liten badge uppe till vänster, "⑂ public",

@@ -54,9 +54,24 @@
       opacity: 0.6;
     }
     .github-corner:hover { opacity: 1; color: #1a3a5c; }
+    .branch-badge {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      font-family: "Courier New", monospace;
+      font-size: 0.75em;
+      color: #1a3a5c;
+      background: #e8f0fb;
+      border: 1px solid #c5d5e8;
+      border-radius: 12px;
+      padding: 4px 12px;
+      opacity: 0.9;
+    }
   </style>
 </head>
 <body>
+
+<div class="branch-badge" title="Statisk text, uppdateras inte automatiskt om grenen byter namn igen – se grenhantering.md">⑂ public</div>
 
 <div class="container">
   <h1>ArbetenSokta</h1>
@@ -81,7 +96,7 @@
 
   <h2>Innehåll</h2>
 
-  <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/main/Skills/humanizer/SKILL.md" target="_blank">
+  <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/public/Skills/humanizer/SKILL.md" target="_blank">
     <h3>Skills/humanizer/SKILL.md</h3>
     <p>
       Själva skillet: regler för att ta bort AI-skrivmönster ur en text,
@@ -89,13 +104,25 @@
     </p>
   </a>
 
-  <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/main/Skills/humanizer/skillprocess.md" target="_blank">
+  <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/public/Skills/humanizer/skillprocess.md" target="_blank">
     <h3>Skills/humanizer/skillprocess.md</h3>
     <p>
       Hur enstaka, utvalda filer kan göras publika utan att resten av det
       privata projektet följer med, och hur man lägger till fler. En genomgång
       av orphan-grenar och en pre-push-hook som teknisk spärr, med skärmdumpar
       och en förklaring av vad varje git-kommando i processen faktiskt gör.
+    </p>
+  </a>
+
+  <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/public/Skills/humanizer/grenhantering.md" target="_blank">
+    <h3>Skills/humanizer/grenhantering.md</h3>
+    <p>
+      Vilka grenar som finns (bara två, lokalt), och hur en namnkrock mellan
+      den privata <code>main</code>-grenen och fjärrgrenens ursprungliga namn
+      upptäcktes och åtgärdades genom att döpa om fjärrgrenen till "public",
+      inte genom att lägga till en tredje gren. Med skärmdumpar av de två
+      GitHub-inställningarna (Default branch, Pages-källgren) som krävde
+      manuella byten för att namnbytet skulle slå igenom fullt ut.
     </p>
   </a>
 
@@ -121,7 +148,7 @@
   </p>
 
   <div class="callout">
-    <a href="https://github.com/kentlundgren/ArbetenSokta/blob/main/Skills/humanizer/skillprocess.md" target="_blank">Skills/humanizer/skillprocess.md</a>
+    <a href="https://github.com/kentlundgren/ArbetenSokta/blob/public/Skills/humanizer/skillprocess.md" target="_blank">Skills/humanizer/skillprocess.md</a>
   </div>
 
   <h2>Källa till skill-strukturen</h2>

@@ -23,6 +23,13 @@ AI-genererad text ("humanizer"). Fler kan läggas till, se
   projektet följer med, och hur man lägger till fler. Beskriver en orphan-gren
   utan delad historik och en pre-push-hook som teknisk spärr, med skärmdumpar
   och en genomgång av vad varje git-kommando i processen faktiskt gör.
+- [`Skills/humanizer/grenhantering.md`](Skills/humanizer/grenhantering.md) –
+  vilka grenar som finns (bara två, lokalt), och hur en namnkrock mellan den
+  privata `main`-grenen och fjärrgrenens ursprungliga namn upptäcktes och
+  åtgärdades genom att döpa om fjärrgrenen till `public`, inte genom att lägga
+  till en tredje gren. Med skärmdumpar av de två GitHub-inställningarna
+  (Default branch, Pages-källgren) som fick bytas manuellt för att
+  namnbytet skulle slå igenom fullt ut.
 
 ## Varför bara enstaka filer?
 

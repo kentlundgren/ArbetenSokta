@@ -5,6 +5,10 @@ personlighetstester, kan ha exakt en publik fil på GitHub, `Skills/humanizer/SK
 utan att något av det andra innehållet riskerar att följa med. Inte som en regel man
 måste komma ihåg, utan som en teknisk spärr som stoppar det även om man skulle glömma.
 
+*Handlar den här filen specifikt om vilka grenar som finns och hur de heter?
+Se [grenhantering.md](grenhantering.md) istället, en kortare, fristående
+genomgång av just det.*
+
 ## Problemet
 
 De flesta filerna i `ArbetenSokta` (CV, ansökningar, personlighetstester, intervjuförberedelser med mera) innehåller personuppgifter och ska aldrig bli publika. Men en av skillsen i projektet, `humanizer` (regler för att ta bort AI-skrivmönster), innehåller
@@ -172,9 +176,14 @@ git checkout github-public
 git checkout main -- Skills/humanizer/SKILL.md   # hämtar senaste versionen från main
 git add Skills/humanizer/SKILL.md
 git commit -m "Uppdatera humanizer-skillet"
-git push origin github-public:main
+git push origin github-public:public
 git checkout main
 ```
+
+*(Fjärrgrenen heter `public`, inte `main`, sedan namnbytet beskrivet i
+[grenhantering.md](grenhantering.md). Se den filen om `:main` dyker upp i
+äldre kommandon nedan, det var namnet innan namnkrocken upptäcktes och
+åtgärdades.)*
 
 
 

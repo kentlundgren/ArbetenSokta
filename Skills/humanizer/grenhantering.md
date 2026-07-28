@@ -50,11 +50,34 @@ Detta skapar inte en tredje gren. Det är fortfarande samma två lokala grenar
 som innan, bara att den publicerade motsvarigheten på GitHub nu heter "public"
 istället för "main". `github-public` (lokalt) följer nu `origin/public`.
 
-**Kvarstående manuella steg** (görs i GitHub:s webbgränssnitt, inte via git):
-- **Settings → Pages**: byt källgren från `main` till `public`.
-- **Settings → General → Default branch**: byt till `public`.
-- Först därefter: ta bort den gamla fjärrgrenen `main`
-  (`git push origin --delete main`), så att inget pekar på den längre.
+**Två manuella steg krävdes**, i GitHub:s webbgränssnitt, inte via git (git kan
+byta namn på en gren, men "vilken gren är standard" och "vilken gren bygger
+GitHub Pages från" är rena GitHub-inställningar, inte något `git push` rör):
+
+**1. Settings → General → Default branch**, bytt från `main` till `public`:
+
+![Byt standardgren från main till public](switch_to_public_branch_from_main_branch.jpg)
+
+**2. Settings → Pages**, källgrenen bytt från `main` till `public`:
+
+![Byt Pages-källgren från main till public](switch_to_public_branch_from_main_branch_i_Pages.jpg)
+
+Efter båda stegen: "Your site is currently being built from the public branch",
+och sidan (`kentlundgren.github.io/ArbetenSokta`) fortsatte fungera utan avbrott,
+eftersom den gamla `main`-grenen på fjärrservern fortfarande fanns kvar som
+reserv medan bytet gjordes.
+
+**Sista steget:** den gamla fjärrgrenen `main` är borttagen
+(`git push origin --delete main`). Bara `public` finns kvar på GitHub.
+
+## En synlig etikett på sidan, med en viktig begränsning
+
+Live-sidan (`index.html`) har nu en liten badge uppe till vänster, "⑂ public",
+som en påminnelse om vilken gren innehållet kommer från. Den är **statisk
+text**, inte något som läser av git. En vanlig HTML-sida i en webbläsare har
+ingen koppling till git överhuvudtaget, den vet inte var filen kom ifrån. Om
+grenen någon gång byter namn igen måste den texten uppdateras för hand, precis
+som vitlistan i hook-filerna. Ingen automatik håller den i synk.
 
 ## Sammanfattning, som en enkel regel
 

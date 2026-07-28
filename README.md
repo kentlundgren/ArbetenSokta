@@ -6,6 +6,11 @@ från det lokala, privata projekt (jobbansökningar, CV, personlighetstester) so
 skillet togs fram i. Det övriga innehållet i det projektet är och blir aldrig
 publikt, det finns bara på en lokal gren som tekniskt inte kan pushas hit.
 
+## Live-sida
+
+**[kentlundgren.github.io/ArbetenSokta](https://kentlundgren.github.io/ArbetenSokta/)**
+– samma innehåll som denna README, men som en fristående GitHub Pages-sida.
+
 ## Innehåll
 
 - [`Skills/humanizer/SKILL.md`](Skills/humanizer/SKILL.md) – själva skillet:

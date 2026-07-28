@@ -130,6 +130,35 @@ till den kommandoraden har inget lämnat datorn. Man kan verifiera att kopplinge
 faktiskt registrerades med `git remote -v`, som listar url:erna för alla
 konfigurerade remotes, utan att skicka något.
 
+## Vad händer exakt när man kör `git push -u origin github-public:main`?
+
+Till skillnad från `git remote add` skickar det här kommandot faktiskt data över
+internet. I ordning:
+
+1. **`git push`** – huvudkommandot, "skicka commits till en fjärrserver".
+2. **`origin`** – vilken fjärrserver, den adress som registrerades i förra steget.
+3. **`github-public:main`** – refspec-syntax, `<lokal gren>:<fjärr-gren>`. Ta den
+   lokala grenen `github-public` och skicka den till en gren som ska heta `main`
+   på fjärrservern. Eftersom repot är tomt skapas `main` där i samma steg.
+4. **`-u`** (kort för `--set-upstream`) – efter lyckad push, kom ihåg kopplingen:
+   den lokala grenen `github-public` "följer" nu `origin/main`. Nästa gång räcker
+   det att skriva `git push` utan hela refspecen, git minns var den ska.
+
+**Vad som faktiskt skickas:** bara det som är nåbart från `github-public`s senaste
+commit, alltså de fåtal commits som finns på just den grenen och bara innehåller
+de tre vitlistade filerna. Eftersom `github-public` är en orphan-gren utan delad
+historik med `main` finns det inget sätt för git att av misstag plocka med sig
+CV:n eller ansökningarna här, de är inte en del av det som är "nåbart" från denna
+gren, oavsett vad kommandot skulle råka pusha.
+
+**Ordningen saker faktiskt sker i:**
+1. Den lokala pre-push-hooken (`.git/hooks/pre-push`) körs FÖRST, innan någon
+   nätverkstrafik. Om den blockerar avbryts allt här, ingenting skickas.
+2. Om hooken godkänner: git packar ihop de commit-, träd- och filobjekt som
+   fjärrservern saknar, och skickar dem.
+3. GitHub tar emot dem och skapar grenen `main` i det tidigare tomma repot.
+4. Lokalt sparas upstream-kopplingen i `.git/config`.
+
 ## Att uppdatera den publika versionen senare
 
 Redigera filen på `main` som vanligt, committa där. Publicera sedan:

@@ -172,6 +172,27 @@ git push origin github-public:main
 git checkout main
 ```
 
+## Fallgrop: README.md räcker inte för en GitHub Pages-sida
+
+Efter att `README.md` pushats och GitHub Pages aktiverats (Settings → Pages →
+Branch: main, mapp: /) gav `https://kentlundgren.github.io/ArbetenSokta/`
+fortfarande ett 404-fel: "For root URLs ... you must provide an index.html file."
+
+Orsaken: GitHub har egentligen **två separata renderingsvägar** som råkar se
+likartade ut i sammanhanget, men är helt orelaterade tekniskt:
+
+1. **Repo-sidan** (`github.com/<user>/<repo>`) – renderar automatiskt
+   `README.md` om en sådan finns i roten. Det är den vägen som fungerade direkt.
+2. **GitHub Pages** (`<user>.github.io/<repo>`) – en helt separat statisk
+   webbserver. Den bryr sig inte om `README.md` alls, den letar specifikt efter
+   `index.html` (eller `index.md` om Jekyll är konfigurerat) i roten av den valda
+   grenen/mappen. Utan den filen: 404, oavsett vad README.md innehåller.
+
+Fixen: lade till en egen `index.html` i roten av `github-public`, med samma
+innehåll som README.md men som en fristående, självstädande HTML-sida (ingen
+Jekyll, inget byggsteg, samma princip som i Kents Ekonomi-projekt). Lades till i
+`ALLOWED_FILES` i båda hook-kopiorna, testat och pushat.
+
 ## Källa till skill-strukturen själv
 
 Anthropic (u.å.) *Skill Development for Claude Code Plugins*. [SKILL.md]

@@ -7,9 +7,7 @@ måste komma ihåg, utan som en teknisk spärr som stoppar det även om man skul
 
 ## Problemet
 
-De flesta filerna i `ArbetenSokta` (CV, ansökningar, personlighetstester,
-intervjuförberedelser) innehåller personuppgifter och ska aldrig bli publika. Men en av
-skillsen i projektet, `humanizer` (regler för att ta bort AI-skrivmönster), innehåller
+De flesta filerna i `ArbetenSokta` (CV, ansökningar, personlighetstester, intervjuförberedelser med mera) innehåller personuppgifter och ska aldrig bli publika. Men en av skillsen i projektet, `humanizer` (regler för att ta bort AI-skrivmönster), innehåller
 ingen personlig information alls och är generellt användbar. Frågan blev: hur delar man
 den ena filen publikt utan att riskera resten?
 
@@ -19,8 +17,7 @@ används här. Lösningen nedan håller allt i **samma** repo, med samma histori
 
 ## Lösningen: en gren utan delad historik + en teknisk spärr
 
-**1. En orphan-gren.** `github-public` skapades med `git checkout --orphan
-github-public`. En orphan-gren delar ingen historik med `main` alls, den vet inte att
+**1. En orphan-gren.** `github-public` skapades med `git checkout --orphan github-public`. En orphan-gren delar ingen historik med `main` alls, den vet inte att
 CV:n eller ansökningarna existerar. Den innehåller bara det som uttryckligen läggs till
 på den, ingenting ärvs.
 
@@ -32,9 +29,11 @@ git commit -m "Publicera humanizer-skillet"
 git checkout main                      # tillbaka till vardagsarbetet
 ```
 
+
+
 ### Varför byta gren över huvud taget?
 
-![Bytte från "main" till grenen: github-public](Cursor_bytte_from_main_till_github-public.jpg)
+Bytte från "main" till grenen: github-public
 
 Git checkar bara ut det som en gren faktiskt känner till. `main` känner till allt
 (CV, ansökningar, personlighetstester, humanizer-skillet). `github-public` känner
@@ -42,12 +41,12 @@ bara till de tre filerna på vitlistan. Att byta gren i Cursor (skärmdumpen ova
 nere till vänster i fönstret) byter alltså vilka filer som syns i Utforskaren och
 vilken historik `git commit`/`git push` arbetar mot just då.
 
-**Varför man behöver byta till `github-public`:** Det är den enda grenen som får
+**Varför man behöver byta till** `github-public`**:** Det är den enda grenen som får
 pushas (se spärren nedan). Vill man publicera eller uppdatera något av det som är
 tänkt att bli publikt, måste man stå på just den grenen när man committar och
 pushar, annars finns det ingen giltig plats att skicka ändringen till.
 
-**När man ska byta tillbaka till `main`:** Direkt efter att publiceringen är klar,
+**När man ska byta tillbaka till** `main`**:** Direkt efter att publiceringen är klar,
 det vill säga så fort man har körts `git push` (eller bestämt sig för att inte
 pusha just nu). `github-public` är inget att jobba vidare i. Allt vardagsarbete,
 CV, ansökningar, redigering av `controlleransokan`- och
@@ -55,7 +54,7 @@ CV, ansökningar, redigering av `controlleransokan`- och
 `SKILL.md` för humanizer, sker på `main`. `github-public` är bara en tillfällig
 "publiceringsstation": byt till den, uppdatera/committa/pusha, byt direkt tillbaka.
 
-**Bekräftat: ja, all push av `main` till GitHub är spärrad.** Inte bara
+**Bekräftat: ja, all push av** `main` **till GitHub är spärrad.** Inte bara
 avskräckt eller dokumenterad som en regel, tekniskt blockerad av
 `.git/hooks/pre-push` oavsett vem som försöker och vilket kommando som skrivs.
 Se testresultatet i punkt 3 nedan.
@@ -65,7 +64,7 @@ automatiskt varje gång `git push` anropas, innan något skickas iväg. Den kont
 
 - Är grenen som pushas exakt `github-public`? Om inte: avbryt.
 - Innehåller den grenen bara filer från en vitlista (`ALLOWED_FILES` i hook-skriptet)?
-  Om inte: avbryt.
+Om inte: avbryt.
 
 Skillnaden mot att bara skriva en regel i CLAUDE.md: en regel kan glömmas eller
 missförstås. En hook som avbryter kommandot fungerar likadant oavsett vem (Kent eller
@@ -91,6 +90,8 @@ lokalt bare-repo:
 Försök: git push <låtsas-remote> main            → SPÄRR: push av 'refs/heads/main' är blockerad.
 Försök: git push <låtsas-remote> github-public   → lyckades, exakt de tillåtna filerna hamnade där.
 ```
+
+
 
 ## Vad som faktiskt är publikt
 
@@ -135,13 +136,13 @@ konfigurerade remotes, utan att skicka något.
 Till skillnad från `git remote add` skickar det här kommandot faktiskt data över
 internet. I ordning:
 
-1. **`git push`** – huvudkommandot, "skicka commits till en fjärrserver".
-2. **`origin`** – vilken fjärrserver, den adress som registrerades i förra steget.
-3. **`github-public:main`** – refspec-syntax, `<lokal gren>:<fjärr-gren>`. Ta den
-   lokala grenen `github-public` och skicka den till en gren som ska heta `main`
+1. `git push` – huvudkommandot, "skicka commits till en fjärrserver".
+2. `origin` – vilken fjärrserver, den adress som registrerades i förra steget.
+3. `github-public:main` – refspec-syntax, `<lokal gren>:<fjärr-gren>`. Ta den
+  lokala grenen `github-public` och skicka den till en gren som ska heta `main`
    på fjärrservern. Eftersom repot är tomt skapas `main` där i samma steg.
-4. **`-u`** (kort för `--set-upstream`) – efter lyckad push, kom ihåg kopplingen:
-   den lokala grenen `github-public` "följer" nu `origin/main`. Nästa gång räcker
+4. `-u` (kort för `--set-upstream`) – efter lyckad push, kom ihåg kopplingen:
+  den lokala grenen `github-public` "följer" nu `origin/main`. Nästa gång räcker
    det att skriva `git push` utan hela refspecen, git minns var den ska.
 
 **Vad som faktiskt skickas:** bara det som är nåbart från `github-public`s senaste
@@ -152,12 +153,15 @@ CV:n eller ansökningarna här, de är inte en del av det som är "nåbart" frå
 gren, oavsett vad kommandot skulle råka pusha.
 
 **Ordningen saker faktiskt sker i:**
+
 1. Den lokala pre-push-hooken (`.git/hooks/pre-push`) körs FÖRST, innan någon
-   nätverkstrafik. Om den blockerar avbryts allt här, ingenting skickas.
+  nätverkstrafik. Om den blockerar avbryts allt här, ingenting skickas.
 2. Om hooken godkänner: git packar ihop de commit-, träd- och filobjekt som
-   fjärrservern saknar, och skickar dem.
+  fjärrservern saknar, och skickar dem.
 3. GitHub tar emot dem och skapar grenen `main` i det tidigare tomma repot.
 4. Lokalt sparas upstream-kopplingen i `.git/config`.
+
+
 
 ## Att uppdatera den publika versionen senare
 
@@ -172,6 +176,8 @@ git push origin github-public:main
 git checkout main
 ```
 
+
+
 ## Fallgrop: README.md räcker inte för en GitHub Pages-sida
 
 Efter att `README.md` pushats och GitHub Pages aktiverats (Settings → Pages →
@@ -182,9 +188,9 @@ Orsaken: GitHub har egentligen **två separata renderingsvägar** som råkar se
 likartade ut i sammanhanget, men är helt orelaterade tekniskt:
 
 1. **Repo-sidan** (`github.com/<user>/<repo>`) – renderar automatiskt
-   `README.md` om en sådan finns i roten. Det är den vägen som fungerade direkt.
+  `README.md` om en sådan finns i roten. Det är den vägen som fungerade direkt.
 2. **GitHub Pages** (`<user>.github.io/<repo>`) – en helt separat statisk
-   webbserver. Den bryr sig inte om `README.md` alls, den letar specifikt efter
+  webbserver. Den bryr sig inte om `README.md` alls, den letar specifikt efter
    `index.html` (eller `index.md` om Jekyll är konfigurerat) i roten av den valda
    grenen/mappen. Utan den filen: 404, oavsett vad README.md innehåller.
 
@@ -205,9 +211,9 @@ Orsaken är i grunden samma sak som i fallgropen ovan, ännu en gång två separ
 system som råkar dela varumärke:
 
 1. **GitHub Pages** är en statisk filserver. Ber man om en `.md`-fil därifrån får
-   man exakt de byte som ligger i filen, obehandlade. Ingen rendering sker.
+  man exakt de byte som ligger i filen, obehandlade. Ingen rendering sker.
 2. **GitHub.coms egna repo-vy** (`github.com/<user>/<repo>/blob/<gren>/<sökväg>`,
-   fliken "Preview") är en helt annan produkt: en webbapplikation som aktivt
+  fliken "Preview") är en helt annan produkt: en webbapplikation som aktivt
    tolkar markdown och bygger om den till formaterad HTML server-side varje gång
    sidan öppnas, med GitHubs eget utseende, klickbara rubrikankare,
    syntax-färgning och bilder inbäddade.
@@ -224,5 +230,5 @@ relativa sökvägar, och öppnas i ny flik (`target="_blank"`).
 
 Anthropic (u.å.) *Skill Development for Claude Code Plugins*. [SKILL.md]
 claude-plugins-official (GitHub). Tillgänglig:
-https://github.com/anthropics/claude-plugins-official/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md
+[https://github.com/anthropics/claude-plugins-official/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md](https://github.com/anthropics/claude-plugins-official/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md)
 [Hämtad: 2026-07-28].

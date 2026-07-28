@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ArbetenSokta – humanizer-skillet</title>
+  <style>
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.05em;
+      line-height: 1.75;
+      color: #222;
+      background: #fafaf8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+    h1 { font-size: 1.7em; color: #1a3a5c; margin-bottom: 6px; }
+    h2 { font-size: 1.2em; color: #1a3a5c; margin-top: 36px; }
+    .meta { color: #888; font-size: 0.9em; margin-bottom: 32px; }
+    a { color: #1a6eb5; }
+    .card {
+      display: block;
+      border: 1px solid #d0dce8;
+      border-radius: 6px;
+      padding: 18px 22px;
+      margin: 14px 0;
+      text-decoration: none;
+      color: inherit;
+      background: #fff;
+    }
+    .card h3 { margin: 0 0 6px; color: #1a3a5c; font-size: 1.05em; }
+    .card p { margin: 0; color: #444; font-size: 0.95em; }
+    .callout {
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      border-radius: 4px;
+      padding: 14px 18px;
+      margin: 22px 0;
+      font-size: 0.95em;
+    }
+    .github-corner {
+      position: fixed;
+      bottom: 14px;
+      left: 14px;
+      font-family: "Courier New", monospace;
+      font-size: 0.78em;
+      color: #aaa;
+      text-decoration: none;
+      opacity: 0.6;
+    }
+    .github-corner:hover { opacity: 1; color: #1a3a5c; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>ArbetenSokta</h1>
+  <p class="meta">Publikt repo – innehåller exakt en fil av verkligt värde</p>
+
+  <p>
+    Det här publika repot innehåller en Claude Skill som tar bort tecken på
+    AI-genererad text ("humanizer"). Namnet <code>ArbetenSokta</code> är ett arv
+    från det lokala, privata projekt (jobbansökningar, CV, personlighetstester)
+    som skillet togs fram i. Det övriga innehållet i det projektet är och blir
+    aldrig publikt, det finns bara på en lokal gren som tekniskt inte kan pushas
+    hit.
+  </p>
+
+  <div class="callout">
+    Den här sidan är GitHub Pages-versionen. Vill du se filerna direkt (och
+    källkoden) i stället, gå till
+    <a href="https://github.com/kentlundgren/ArbetenSokta">github.com/kentlundgren/ArbetenSokta</a>.
+  </div>
+
+  <h2>Innehåll</h2>
+
+  <a class="card" href="Skills/humanizer/SKILL.md">
+    <h3>Skills/humanizer/SKILL.md</h3>
+    <p>
+      Själva skillet: regler för att ta bort AI-skrivmönster ur en text,
+      baserat på Wikipedias "Signs of AI writing".
+    </p>
+  </a>
+
+  <a class="card" href="Skills/humanizer/skillprocess.md">
+    <h3>Skills/humanizer/skillprocess.md</h3>
+    <p>
+      Hur just den här filen, och bara den, kunde göras publik utan att resten
+      av det privata projektet följde med. En genomgång av orphan-grenar och en
+      pre-push-hook som teknisk spärr, med skärmdumpar och en förklaring av vad
+      varje git-kommando i processen faktiskt gör.
+    </p>
+  </a>
+
+  <h2>Varför bara en fil?</h2>
+  <p>
+    De flesta filerna i ursprungsprojektet innehåller personuppgifter
+    (kontaktuppgifter, en personlighetsprofilsyntes) och ska aldrig bli
+    publika. Humanizer-skillet innehåller ingen personlig information och är
+    generellt användbart, det är den enda filen som medvetet valts ut för att
+    delas.
+  </p>
+
+  <h2>Källa till skill-strukturen</h2>
+  <p>
+    Anthropic (u.å.) <em>Skill Development for Claude Code Plugins</em>. [SKILL.md]
+    claude-plugins-official (GitHub). Tillgänglig:
+    <a href="https://github.com/anthropics/claude-plugins-official/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md" target="_blank">github.com/anthropics/claude-plugins-official</a>
+    [Hämtad: 2026-07-28].
+  </p>
+</div>
+
+<a class="github-corner" href="https://github.com/kentlundgren/ArbetenSokta" target="_blank">{ } GitHub</a>
+</body>
+</html>

@@ -32,6 +32,34 @@ git commit -m "Publicera humanizer-skillet"
 git checkout main                      # tillbaka till vardagsarbetet
 ```
 
+### Varför byta gren över huvud taget?
+
+![Bytte från "main" till grenen: github-public](Cursor_bytte_from_main_till_github-public.jpg)
+
+Git checkar bara ut det som en gren faktiskt känner till. `main` känner till allt
+(CV, ansökningar, personlighetstester, humanizer-skillet). `github-public` känner
+bara till de tre filerna på vitlistan. Att byta gren i Cursor (skärmdumpen ovan,
+nere till vänster i fönstret) byter alltså vilka filer som syns i Utforskaren och
+vilken historik `git commit`/`git push` arbetar mot just då.
+
+**Varför man behöver byta till `github-public`:** Det är den enda grenen som får
+pushas (se spärren nedan). Vill man publicera eller uppdatera något av det som är
+tänkt att bli publikt, måste man stå på just den grenen när man committar och
+pushar, annars finns det ingen giltig plats att skicka ändringen till.
+
+**När man ska byta tillbaka till `main`:** Direkt efter att publiceringen är klar,
+det vill säga så fort man har körts `git push` (eller bestämt sig för att inte
+pusha just nu). `github-public` är inget att jobba vidare i. Allt vardagsarbete,
+CV, ansökningar, redigering av `controlleransokan`- och
+`intervjuforbredelse`-skillsen, och även det löpande arbetet med att skriva
+`SKILL.md` för humanizer, sker på `main`. `github-public` är bara en tillfällig
+"publiceringsstation": byt till den, uppdatera/committa/pusha, byt direkt tillbaka.
+
+**Bekräftat: ja, all push av `main` till GitHub är spärrad.** Inte bara
+avskräckt eller dokumenterad som en regel, tekniskt blockerad av
+`.git/hooks/pre-push` oavsett vem som försöker och vilket kommando som skrivs.
+Se testresultatet i punkt 3 nedan.
+
 **2. En pre-push-hook som teknisk spärr.** En git-hook (`.git/hooks/pre-push`) körs
 automatiskt varje gång `git push` anropas, innan något skickas iväg. Den kontrollerar:
 

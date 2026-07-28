@@ -1,10 +1,12 @@
 # ArbetenSokta
 
-Det här publika repot innehåller exakt en användbar fil: en Claude Skill som tar
-bort tecken på AI-genererad text ("humanizer"). Namnet `ArbetenSokta` är ett arv
-från det lokala, privata projekt (jobbansökningar, CV, personlighetstester) som
-skillet togs fram i. Det övriga innehållet i det projektet är och blir aldrig
-publikt, det finns bara på en lokal gren som tekniskt inte kan pushas hit.
+Det här publika repot innehåller enstaka, medvetet utvalda filer ur ett annars
+privat projekt (jobbansökningar, CV, personlighetstester). Namnet `ArbetenSokta`
+är ett arv från det ursprungsprojektet. De allra flesta filerna där ska aldrig
+bli publika, och kan tekniskt inte pushas hit, bara de filer som explicit valts
+ut hamnar här. Just nu är det en fil: en Claude Skill som tar bort tecken på
+AI-genererad text ("humanizer"). Fler kan läggas till, se
+["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
 ## Live-sida
 
@@ -17,17 +19,36 @@ publikt, det finns bara på en lokal gren som tekniskt inte kan pushas hit.
   regler för att ta bort AI-skrivmönster ur en text, baserat på Wikipedias
   ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
 - [`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md) – hur
-  just den här filen, och bara den, kunde göras publik utan att resten av det
-  privata projektet följde med. Beskriver en orphan-gren utan delad historik och
-  en pre-push-hook som teknisk spärr, med skärmdumpar och en genomgång av vad
-  varje git-kommando i processen faktiskt gör.
+  enstaka, utvalda filer kan göras publika utan att resten av det privata
+  projektet följer med, och hur man lägger till fler. Beskriver en orphan-gren
+  utan delad historik och en pre-push-hook som teknisk spärr, med skärmdumpar
+  och en genomgång av vad varje git-kommando i processen faktiskt gör.
 
-## Varför bara en fil?
+## Varför bara enstaka filer?
 
 De flesta filerna i ursprungsprojektet innehåller personuppgifter (kontaktuppgifter,
 en personlighetsprofilsyntes) och ska aldrig bli publika. Humanizer-skillet
-innehåller ingen personlig information och är generellt användbart, det är den
-enda filen som medvetet valts ut för att delas.
+innehåller ingen personlig information och är generellt användbart, det är därför
+det valts ut för att delas. Samma princip gäller för varje ny fil som eventuellt
+läggs till här: den ska vara medvetet vald, inte råka följa med.
+
+## Lägga till fler publika filer
+
+En ny fil blir aldrig publik av misstag, en teknisk spärr (en pre-push-hook)
+blockerar allt som inte står på en vitlista. Att lägga till en ny fil är därför
+ett par medvetna steg, inte en vanlig commit:
+
+1. Redigera/skapa filen på `main` som vanligt, committa där.
+2. Lägg till filens sökväg i `ALLOWED_FILES` i **båda** hook-kopiorna:
+   `.git/hooks/pre-push` (den aktiva) och `.githooks/pre-push` (den läsbara
+   referenskopian), på `main`.
+3. Byt till `github-public`: `git checkout github-public`.
+4. Hämta in filen på den grenen: `git checkout main -- <sökväg-till-filen>`.
+5. `git add <sökväg-till-filen>`, `git commit`, `git push`.
+6. `git checkout main` – tillbaka till vardagsarbetet.
+
+Full genomgång, med skärmdumpar och en förklaring av varje kommando, finns i
+[`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md).
 
 ## Källa till skill-strukturen
 

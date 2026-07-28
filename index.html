@@ -60,15 +60,17 @@
 
 <div class="container">
   <h1>ArbetenSokta</h1>
-  <p class="meta">Publikt repo – innehåller exakt en fil av verkligt värde</p>
+  <p class="meta">Publikt repo – innehåller enstaka, medvetet utvalda filer</p>
 
   <p>
-    Det här publika repot innehåller en Claude Skill som tar bort tecken på
-    AI-genererad text ("humanizer"). Namnet <code>ArbetenSokta</code> är ett arv
-    från det lokala, privata projekt (jobbansökningar, CV, personlighetstester)
-    som skillet togs fram i. Det övriga innehållet i det projektet är och blir
-    aldrig publikt, det finns bara på en lokal gren som tekniskt inte kan pushas
-    hit.
+    Det här publika repot innehåller enstaka, medvetet utvalda filer ur ett
+    annars privat projekt (jobbansökningar, CV, personlighetstester). Namnet
+    <code>ArbetenSokta</code> är ett arv från ursprungsprojektet. De allra
+    flesta filerna där ska aldrig bli publika, och kan tekniskt inte pushas
+    hit, bara de filer som explicit valts ut hamnar här. Just nu är det en
+    fil: en Claude Skill som tar bort tecken på AI-genererad text
+    ("humanizer"). Fler kan läggas till, se "Lägga till fler publika filer"
+    nedan.
   </p>
 
   <div class="callout">
@@ -90,21 +92,37 @@
   <a class="card" href="https://github.com/kentlundgren/ArbetenSokta/blob/main/Skills/humanizer/skillprocess.md" target="_blank">
     <h3>Skills/humanizer/skillprocess.md</h3>
     <p>
-      Hur just den här filen, och bara den, kunde göras publik utan att resten
-      av det privata projektet följde med. En genomgång av orphan-grenar och en
-      pre-push-hook som teknisk spärr, med skärmdumpar och en förklaring av vad
-      varje git-kommando i processen faktiskt gör.
+      Hur enstaka, utvalda filer kan göras publika utan att resten av det
+      privata projektet följer med, och hur man lägger till fler. En genomgång
+      av orphan-grenar och en pre-push-hook som teknisk spärr, med skärmdumpar
+      och en förklaring av vad varje git-kommando i processen faktiskt gör.
     </p>
   </a>
 
-  <h2>Varför bara en fil?</h2>
+  <h2>Varför bara enstaka filer?</h2>
   <p>
     De flesta filerna i ursprungsprojektet innehåller personuppgifter
     (kontaktuppgifter, en personlighetsprofilsyntes) och ska aldrig bli
     publika. Humanizer-skillet innehåller ingen personlig information och är
-    generellt användbart, det är den enda filen som medvetet valts ut för att
-    delas.
+    generellt användbart, det är därför det valts ut för att delas. Samma
+    princip gäller för varje ny fil som eventuellt läggs till här: den ska
+    vara medvetet vald, inte råka följa med.
   </p>
+
+  <h2>Lägga till fler publika filer</h2>
+  <p>
+    En ny fil blir aldrig publik av misstag, en teknisk spärr (en pre-push-hook)
+    blockerar allt som inte står på en vitlista. Kortversionen: redigera filen
+    på grenen <code>main</code>, lägg till dess sökväg i vitlistan
+    (<code>ALLOWED_FILES</code>) i <code>.git/hooks/pre-push</code> och
+    <code>.githooks/pre-push</code>, byt till grenen <code>github-public</code>,
+    hämta in filen dit, committa och pusha, byt sedan tillbaka till
+    <code>main</code>. Fullständig genomgång, steg för steg, med skärmdumpar:
+  </p>
+
+  <div class="callout">
+    <a href="https://github.com/kentlundgren/ArbetenSokta/blob/main/Skills/humanizer/skillprocess.md" target="_blank">Skills/humanizer/skillprocess.md</a>
+  </div>
 
   <h2>Källa till skill-strukturen</h2>
   <p>

@@ -193,6 +193,33 @@ innehåll som README.md men som en fristående, självstädande HTML-sida (ingen
 Jekyll, inget byggsteg, samma princip som i Kents Ekonomi-projekt). Lades till i
 `ALLOWED_FILES` i båda hook-kopiorna, testat och pushat.
 
+## Fallgrop: samma fil ser olika ut beroende på var man länkar till den
+
+`index.html` länkade först till `SKILL.md` och `skillprocess.md` med relativa
+sökvägar (`Skills/humanizer/SKILL.md`). Tekniskt korrekt, länken fungerar, men
+resultatet blir en fil som visas **rå**: ingen styling, ingen syntax-färgning av
+kodblocken, inga bilder synliga inline, bara oformaterad markdown-text i
+webbläsaren.
+
+Orsaken är i grunden samma sak som i fallgropen ovan, ännu en gång två separata
+system som råkar dela varumärke:
+
+1. **GitHub Pages** är en statisk filserver. Ber man om en `.md`-fil därifrån får
+   man exakt de byte som ligger i filen, obehandlade. Ingen rendering sker.
+2. **GitHub.coms egna repo-vy** (`github.com/<user>/<repo>/blob/<gren>/<sökväg>`,
+   fliken "Preview") är en helt annan produkt: en webbapplikation som aktivt
+   tolkar markdown och bygger om den till formaterad HTML server-side varje gång
+   sidan öppnas, med GitHubs eget utseende, klickbara rubrikankare,
+   syntax-färgning och bilder inbäddade.
+
+En relativ länk från en GitHub Pages-sida pekar på (1). Ska en `.md`-fil visas
+med samma "designade" känsla som i webbläsaren måste länken peka explicit på (2),
+den fullständiga `blob`-URL:en, inte en relativ sökväg.
+
+Fixen: `index.html`s länkar till `SKILL.md` och `skillprocess.md` pekar nu på
+`https://github.com/kentlundgren/ArbetenSokta/blob/main/...` istället för
+relativa sökvägar, och öppnas i ny flik (`target="_blank"`).
+
 ## Källa till skill-strukturen själv
 
 Anthropic (u.å.) *Skill Development for Claude Code Plugins*. [SKILL.md]

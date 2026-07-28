@@ -104,6 +104,32 @@ Allt annat i `ArbetenSokta`, inklusive `controlleransokan`- och
 `intervjuforbredelse`-skillsen (som innehåller kontaktuppgifter och en
 personlighetsprofil), stannar på `main` och kan tekniskt inte pushas till samma remote.
 
+## Vad händer exakt när man kör `git remote add origin <url>`?
+
+Det här kommandot gör bara **en enda sak**: det lägger till en rad i den lokala,
+gömda filen `.git/config`, i det här repot:
+
+```
+[remote "origin"]
+	url = https://github.com/kentlundgren/ArbetenSokta.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+```
+
+Ingenting annat. Ingen nätverkstrafik, ingen kontroll att URL:en faktiskt existerar
+eller att man har behörighet att pusha dit, ingen fil skickas iväg. Det är rent
+lokal bokföring, ett smeknamn (`origin`, vald av konvention, kunde hetat vad som
+helst) kopplat till en adress.
+
+**Varför det ser ut som "ingenting hände":** kommandot ger inget output vid
+lyckat resultat. Det är normal git-stil, tyst framgång, felmeddelande om något
+gick fel. Att skärmen ser likadan ut före och efter är alltså inte ett tecken på
+att något gick snett, det är tecknet på att det gick precis som det ska.
+
+**Det som faktiskt skickar något över internet är nästa steg**, `git push`. Fram
+till den kommandoraden har inget lämnat datorn. Man kan verifiera att kopplingen
+faktiskt registrerades med `git remote -v`, som listar url:erna för alla
+konfigurerade remotes, utan att skicka något.
+
 ## Att uppdatera den publika versionen senare
 
 Redigera filen på `main` som vanligt, committa där. Publicera sedan:

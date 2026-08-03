@@ -117,6 +117,40 @@
     font-size: 0.78rem;
   }
 
+  .compare-wrap { overflow-x: auto; margin-top: 1.2rem; }
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+  }
+  .compare th, .compare td {
+    text-align: left;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  .compare th {
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .compare td:first-child {
+    color: var(--ink-soft);
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .compare-notes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+  .compare-notes .tech-card h3 { font-size: 0.85rem; }
+  .compare-notes .tech-card ul { margin: 0; padding-left: 1.1rem; }
+  .compare-notes .tech-card li { font-size: 0.8rem; color: var(--ink); line-height: 1.5; margin-bottom: 0.2rem; }
+
   body {
     background: var(--bg);
     color: var(--ink);
@@ -374,7 +408,7 @@
     <div class="tech-grid">
       <div class="tech-card">
         <h3>Om Claude-artifacts</h3>
-        <p>En publicerad sida (HTML eller Markdown) Claude skriver och publicerar med ett verktygsanrop – lagras i Anthropics moln, kopplad till Kents Claude-konto, aldrig i ett Git-repo. Får en riktig URL direkt, men är <strong>privat som standard</strong> – bara Kent ser den förrän han delar den via sidans egen delningsmeny. Redigeras genom att samma filsökväg publiceras igen (samma URL uppdateras). Hittas tillbaka via galleriet på <code>claude.ai/code/artifacts</code>. Juli-rapportens första designutkast byggdes så, innan den här sidan fanns.</p>
+        <p>En publicerad sida (HTML eller Markdown) Claude skriver och publicerar med ett verktygsanrop – lagras i Anthropics moln, kopplad till Kents Claude-konto, aldrig i ett Git-repo. Får en riktig URL direkt, men är <strong>privat som standard</strong> – bara Kent ser den förrän han delar den via sidans egen delningsmeny. Redigeras genom att samma filsökväg publiceras igen (samma URL uppdateras). Hittas tillbaka via galleriet på <code>claude.ai/code/artifacts</code>. Juli-rapportens första designutkast byggdes så, innan den här sidan fanns – <a href="https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e" target="_blank" rel="noopener">se den artifacten →</a> (kräver att Kent delat den).</p>
       </div>
       <div class="tech-card">
         <h3>Orphan branch för sekretess</h3>
@@ -401,8 +435,50 @@
         <p>Att växla gren mellan <code>main</code>/<code>github-public</code> nollställer filernas datum i OneDrive/Utforskaren (kosmetiskt). Claude återställer dem automatiskt via git-historiken efter varje växling.</p>
       </div>
     </div>
+
+    <h2 style="margin-top:1.4rem; font-size:1.05rem;">Artifact jämfört med GitHub Pages</h2>
+    <div class="compare-wrap">
+      <table class="compare">
+        <thead>
+          <tr><th></th><th>Claude-artifact</th><th>GitHub Pages (den här sidan)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Var den lagras</td><td>Anthropics moln, kopplad till Claude-kontot</td><td>Kents eget GitHub-repo</td></tr>
+          <tr><td>Publik som standard</td><td>Nej – privat tills delad</td><td>Ja, direkt när den pushats</td></tr>
+          <tr><td>Kräver git</td><td>Nej</td><td>Ja</td></tr>
+          <tr><td>Uppdateras genom</td><td>Publicera om samma fil</td><td>Commit + push</td></tr>
+          <tr><td>Egen domän/URL</td><td>Nej, alltid claude.ai/code/artifact/…</td><td>Ja, kentlundgren.github.io/…</td></tr>
+          <tr><td>Sökbar/indexerad</td><td>Nej</td><td>Ja</td></tr>
+          <tr><td>Varaktighet</td><td>Knuten till Claude-kontot</td><td>Oberoende av vilket AI-verktyg som används</td></tr>
+          <tr><td>Bäst för</td><td>Snabb, privat designprototyp</td><td>Varaktig, publik sida</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="compare-notes">
+      <div class="tech-card">
+        <h3>Artifact – fördelar/nackdelar</h3>
+        <ul>
+          <li>+ Inget git, ingen repo-hantering</li>
+          <li>+ Klar på sekunder, bra för att pröva en design</li>
+          <li>− Ingen egen domän eller sökbarhet</li>
+          <li>− Följer kontot, inte projektet</li>
+        </ul>
+      </div>
+      <div class="tech-card">
+        <h3>GitHub Pages – fördelar/nackdelar</h3>
+        <ul>
+          <li>+ Egen, varaktig URL och full kontroll</li>
+          <li>+ Samma mönster som Kents övriga Live-verktyg</li>
+          <li>− Kräver git-kunskap</li>
+          <li>− Sex steg för varje ändring (se ovan)</li>
+        </ul>
+      </div>
+    </div>
+
     <p style="font-size:.8rem; color:var(--ink-soft); margin-top:1.1rem;">
       Källkod: <a href="https://github.com/kentlundgren/ArbetenSokta/tree/public" target="_blank" rel="noopener">github.com/kentlundgren/ArbetenSokta (public-grenen)</a>
+      · Artifact-exempel: <a href="https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e" target="_blank" rel="noopener">se den här sidans första designprototyp →</a>
     </p>
   </div>
 </div>

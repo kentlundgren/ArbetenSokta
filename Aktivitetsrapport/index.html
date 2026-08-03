@@ -569,6 +569,7 @@
   const REPORTS = [
     {
       key: "2026-07",
+      hash: "juli2026",
       label: "Juli 2026",
       windowNote: "Rapporteringsfönster: 1–14 augusti 2026.",
       shared: "Samtliga sju: omfattning <strong>Heltid</strong> · jobbet finns i <strong>Sverige</strong> · svarade på annons: <strong>Ja</strong>.",
@@ -585,6 +586,7 @@
     },
     {
       key: "2026-08",
+      hash: "aug2026",
       label: "Augusti 2026",
       preliminary: true,
       windowNote: "Preliminär – rapporteringsfönstret öppnar 1 september 2026.",
@@ -603,7 +605,16 @@
     opt.textContent = r.label;
     select.appendChild(opt);
   });
-  select.value = REPORTS[REPORTS.length - 1].key;
+
+  // Månad via URL-fragment, t.ex. #juli2026 eller #aug2026 – annars senaste månaden.
+  function reportFromHash() {
+    const hash = location.hash.replace("#", "").trim().toLowerCase();
+    if (!hash) return null;
+    return REPORTS.find(r => r.hash && r.hash.toLowerCase() === hash) || null;
+  }
+
+  const initial = reportFromHash();
+  select.value = initial ? initial.key : REPORTS[REPORTS.length - 1].key;
 
   function fillTable(tbodyId, items) {
     const tbody = document.getElementById(tbodyId);
@@ -642,9 +653,22 @@
 
     fillTable("rows", report.rows);
     fillTable("interview-rows", interviews);
+
+    if (report.hash && location.hash.replace("#", "").toLowerCase() !== report.hash.toLowerCase()) {
+      history.replaceState(null, "", "#" + report.hash);
+    }
   }
 
   select.addEventListener("change", () => render(select.value));
+
+  window.addEventListener("hashchange", () => {
+    const fromHash = reportFromHash();
+    if (fromHash) {
+      select.value = fromHash.key;
+      render(fromHash.key);
+    }
+  });
+
   render(select.value);
 
   function genereraIntervju() {

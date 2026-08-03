@@ -151,6 +151,34 @@
   .compare-notes .tech-card ul { margin: 0; padding-left: 1.1rem; }
   .compare-notes .tech-card li { font-size: 0.8rem; color: var(--ink); line-height: 1.5; margin-bottom: 0.2rem; }
 
+  .btn-add {
+    display: inline-block;
+    margin-top: 12px;
+    font: inherit;
+    font-size: 13px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    cursor: pointer;
+  }
+  .btn-add:hover { background: var(--accent-soft); }
+
+  #interview-modal .modal { max-width: 480px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  .form-row.single { grid-template-columns: 1fr; }
+  .form-row label { display: block; font-size: 12px; color: var(--ink-soft); margin-bottom: 3px; }
+  .form-row input, .form-row select {
+    width: 100%; font: inherit; font-size: 14px; padding: 7px 9px;
+    border: 1px solid var(--line); border-radius: 7px; background: var(--bg); color: var(--ink);
+  }
+  #interview-out {
+    background: var(--row-alt); border: 1px solid var(--line); border-radius: 8px;
+    padding: 10px 12px; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; margin-top: 10px;
+  }
+  .modal-note { font-size: 12px; color: var(--ink-soft); margin-top: 12px; line-height: 1.5; }
+
   body {
     background: var(--bg);
     color: var(--ink);
@@ -349,6 +377,7 @@
       <select id="month-select"></select>
     </div>
     <div class="meta-row" id="meta-row"></div>
+    <button class="btn-add" onclick="document.getElementById('interview-modal').classList.add('show')">+ Ny kommande intervju</button>
   </header>
 
   <div id="jobs-section">
@@ -483,6 +512,57 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="interview-modal" onclick="if(event.target===this) this.classList.remove('show')">
+  <div class="modal">
+    <button class="modal-close" aria-label="Stäng" onclick="document.getElementById('interview-modal').classList.remove('show')">×</button>
+    <h2 style="font-size:1.1rem;">Ny kommande intervju</h2>
+    <p style="font-size:.85rem; color:var(--ink-soft);">Bara AF-fälten – det som (senare) ska in i Arbetsförmedlingens formulär. Inga kontaktuppgifter fylls i här, det här är en publik sida.</p>
+
+    <div class="form-row">
+      <div>
+        <label for="iv-roll">Yrkesroll</label>
+        <input id="iv-roll" value="Controller">
+      </div>
+      <div>
+        <label for="iv-arbetsgivare">Arbetsgivare</label>
+        <input id="iv-arbetsgivare" placeholder="t.ex. Ensolution AB (rekryterare)">
+      </div>
+    </div>
+    <div class="form-row">
+      <div>
+        <label for="iv-varfinns">Var finns jobbet</label>
+        <select id="iv-varfinns">
+          <option>Sverige</option>
+          <option>Obestämd ort</option>
+          <option>Utomlands</option>
+        </select>
+      </div>
+      <div>
+        <label for="iv-ort">Ort</label>
+        <input id="iv-ort" placeholder="t.ex. Malmö">
+      </div>
+    </div>
+    <div class="form-row single">
+      <div>
+        <label for="iv-datum">Datum för intervjun</label>
+        <input id="iv-datum" type="date">
+      </div>
+    </div>
+
+    <button class="btn-add" onclick="genereraIntervju()">Generera AF-rad</button>
+    <div id="interview-out">– fyll i fälten ovan och klicka "Generera AF-rad" –</div>
+
+    <p class="modal-note">
+      Det här skapar bara den publika delen av posten. Vill du även lägga
+      till kontaktperson, LinkedIn, tid och kanal (aldrig publikt), gör det
+      i det fullständiga, privata formuläret på din egen dator –
+      <code>Report_jobs_applied_for/Intervjuformular.html</code>. Bokmärk
+      den filen i din webbläsare så slipper du leta reda på sökvägen varje
+      gång (en https-sida kan av säkerhetsskäl inte länka direkt dit).
+    </p>
+  </div>
+</div>
+
 <script>
   // Ny månad: lägg till ett objekt här. Senaste månaden (sist i listan)
   // väljs som default eftersom det alltid är den som ska rapporteras.
@@ -566,6 +646,17 @@
 
   select.addEventListener("change", () => render(select.value));
   render(select.value);
+
+  function genereraIntervju() {
+    const roll = document.getElementById("iv-roll").value.trim() || "–";
+    const arbetsgivare = document.getElementById("iv-arbetsgivare").value.trim() || "–";
+    const varfinns = document.getElementById("iv-varfinns").value;
+    const ort = document.getElementById("iv-ort").value.trim() || "–";
+    const datum = document.getElementById("iv-datum").value || "ÅÅÅÅ-MM-DD";
+
+    const text = `**AF-fält:** Yrkesroll: ${roll} · Arbetsgivare: ${arbetsgivare} · Var finns jobbet: ${varfinns} · Ort: ${ort} · Datum: ${datum}`;
+    document.getElementById("interview-out").textContent = text;
+  }
 </script>
 
 </body>

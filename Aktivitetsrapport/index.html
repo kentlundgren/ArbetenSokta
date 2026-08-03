@@ -33,6 +33,90 @@
 
   * { box-sizing: border-box; }
 
+  /* Diskreta hörnknappar — Kents egen genväg, inte tänkta att märkas av andra */
+  .corner-btn {
+    position: fixed;
+    bottom: 1.2rem;
+    z-index: 20;
+    background: rgba(120, 140, 160, 0.06);
+    border: 1px solid rgba(120, 140, 160, 0.12);
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    font: inherit;
+    font-size: 0.72rem;
+    color: rgba(85, 103, 122, 0.35);
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .corner-btn:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--ink);
+    border-color: var(--line);
+  }
+  @media (prefers-color-scheme: dark) {
+    .corner-btn { color: rgba(147, 163, 179, 0.3); }
+    .corner-btn:hover { background: var(--card); color: var(--ink); }
+  }
+  .github-btn { left: 1.2rem; }
+  .tech-btn { right: 1.2rem; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 26, 33, 0.5);
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 30;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    max-width: 620px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 1.6rem 1.8rem;
+    position: relative;
+  }
+  .modal h2 { margin-top: 0; font-family: Charter, Georgia, serif; }
+  .modal-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: var(--ink-soft);
+    line-height: 1;
+  }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+  }
+  .tech-card {
+    background: var(--accent-soft);
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+  }
+  .tech-card h3 { margin: 0 0 0.3rem; font-size: 0.92rem; color: var(--accent); }
+  .tech-card p { margin: 0; font-size: 0.82rem; color: var(--ink); line-height: 1.55; }
+  .tech-card code {
+    background: var(--row-alt);
+    padding: 0 4px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+  }
+
   body {
     background: var(--bg);
     color: var(--ink);
@@ -233,28 +317,90 @@
     <div class="meta-row" id="meta-row"></div>
   </header>
 
-  <div class="section">
-    <p class="section-title">Sökta jobb</p>
-    <p class="shared" id="shared-line"></p>
+  <div id="jobs-section">
+    <div class="section">
+      <p class="section-title">Sökta jobb</p>
+      <p class="shared" id="shared-line"></p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Yrkesroll &amp; arbetsgivare</th>
+            <th>Ort</th>
+            <th>Datum sökt</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr>
-          <th>Yrkesroll &amp; arbetsgivare</th>
-          <th>Ort</th>
-          <th>Datum sökt</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+  <div id="interviews-section">
+    <div class="section">
+      <p class="section-title">Intervjuer</p>
+      <p class="shared" id="interviews-shared"></p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Yrkesroll &amp; arbetsgivare</th>
+            <th>Ort</th>
+            <th>Datum</th>
+          </tr>
+        </thead>
+        <tbody id="interview-rows"></tbody>
+      </table>
+    </div>
   </div>
 
   <footer>
     <p class="footnote" id="footnote-line"></p>
-    <p class="source">Genererad ur <code>Aktivitetslogg_2026.md</code> · privat arbetsverktyg.</p>
+    <p class="source">Genererad ur <code>Aktivitetslogg_2026.md</code> · privat arbetsverktyg.
+    Bara AF-fälten visas här – kontaktperson, LinkedIn och egna anteckningar
+    fylls i via ett separat, aldrig publicerat formulär.</p>
   </footer>
+</div>
+
+<a class="corner-btn github-btn" href="https://github.com/kentlundgren/ArbetenSokta" target="_blank" rel="noopener" aria-label="Repot">{ } repo</a>
+<button class="corner-btn tech-btn" onclick="document.getElementById('tech-modal').classList.add('show')" aria-label="Tekniköversikt">&#60;/&#62; teknik</button>
+
+<div class="modal-overlay" id="tech-modal" onclick="if(event.target===this) this.classList.remove('show')">
+  <div class="modal">
+    <button class="modal-close" aria-label="Stäng" onclick="document.getElementById('tech-modal').classList.remove('show')">×</button>
+    <h2>Hur den här sidan är byggd</h2>
+    <p style="font-size:.88rem; color:var(--ink-soft);">Ingen extern ram eller byggtool – ren HTML, CSS och JavaScript, publicerad via GitHub Pages.</p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h3>Orphan branch för sekretess</h3>
+        <p>Sidan publiceras från grenen <code>github-public</code> – en <em>orphan branch</em> utan delad historik med <code>main</code>. Den kan tekniskt inte innehålla filerna med personuppgifter, för de finns inte i dess historik alls.</p>
+      </div>
+      <div class="tech-card">
+        <h3>Pre-push-hook som spärr</h3>
+        <p>En hook i <code>.git/hooks/pre-push</code> blockerar push av allt annat än <code>github-public</code>, och bara filer på en uttrycklig vitlista. Mänskligt minne är inte spärren – ett skript är det.</p>
+      </div>
+      <div class="tech-card">
+        <h3>Ett repo, inte flera</h3>
+        <p>Sidan delar repo med humanizer-skillets publika yta (samma gren, olika undermappar) i stället för ett eget, nytt repo – ett medvetet val 2026-08-03 för att slippa samla på sig många små repos.</p>
+      </div>
+      <div class="tech-card">
+        <h3>AF-fält vs. egna fält</h3>
+        <p>Varje aktivitet har två fältgrupper: det Arbetsförmedlingen kräver (publiceras) och Kents egna tilläggsfält – kontaktperson, LinkedIn, anteckningar (publiceras aldrig). Gränsen är avsiktlig, inte automatisk.</p>
+      </div>
+      <div class="tech-card">
+        <h3>Månadsväljare</h3>
+        <p>Data för varje månad ligger som ett JS-objekt i en array. Senaste månaden väljs som default. Ny månad = ett nytt objekt, ingen ombyggnad av sidan.</p>
+      </div>
+      <div class="tech-card">
+        <h3>Känd bieffekt</h3>
+        <p>Att växla gren mellan <code>main</code>/<code>github-public</code> nollställer filernas datum i OneDrive/Utforskaren (kosmetiskt). Claude återställer dem automatiskt via git-historiken efter varje växling.</p>
+      </div>
+    </div>
+    <p style="font-size:.8rem; color:var(--ink-soft); margin-top:1.1rem;">
+      Källkod: <a href="https://github.com/kentlundgren/ArbetenSokta/tree/public" target="_blank" rel="noopener">github.com/kentlundgren/ArbetenSokta (public-grenen)</a>
+    </p>
+  </div>
 </div>
 
 <script>
@@ -274,6 +420,18 @@
         { role: "Controller", employer: "K.A. Rasmussen", ort: "Malmö", fallback: true, date: "2026-07-29" },
         { role: "Ekonom", employer: "Malmö stad, Serviceförvaltningen", ort: "Malmö", date: "2026-07-30" },
         { role: "Business Controller", employer: "DHL Freight", ort: "Malmö", date: "2026-07-31" }
+      ],
+      interviews: []
+    },
+    {
+      key: "2026-08",
+      label: "Augusti 2026",
+      preliminary: true,
+      windowNote: "Preliminär – rapporteringsfönstret öppnar 1 september 2026.",
+      shared: "Inga sökta jobb registrerade ännu denna månad.",
+      rows: [],
+      interviews: [
+        { role: "Controller", employer: "Ensolution AB (rekryterare)", ort: "Malmö", date: "2026-08-11" }
       ]
     }
   ];
@@ -287,23 +445,10 @@
   });
   select.value = REPORTS[REPORTS.length - 1].key;
 
-  function render(key) {
-    const report = REPORTS.find(r => r.key === key) || REPORTS[REPORTS.length - 1];
-    document.getElementById("page-title").textContent = report.label;
-    document.getElementById("shared-line").innerHTML = report.shared;
-    document.getElementById("footnote-line").innerHTML =
-      report.rows.some(r => r.fallback)
-        ? '<span class="dot">*</span> Exakt placeringsort framgick inte av ansökan – Malmö använt som Kents egen fallback.'
-        : "";
-
-    document.getElementById("meta-row").innerHTML = `
-      <span class="chip">${report.rows.length} sökta jobb</span>
-      <span class="chip neutral">${report.windowNote}</span>
-    `;
-
-    const tbody = document.getElementById("rows");
+  function fillTable(tbodyId, items) {
+    const tbody = document.getElementById(tbodyId);
     tbody.innerHTML = "";
-    report.rows.forEach(row => {
+    items.forEach(row => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><span class="role">${row.role}</span><span class="employer">${row.employer}</span></td>
@@ -312,6 +457,31 @@
       `;
       tbody.appendChild(tr);
     });
+  }
+
+  function render(key) {
+    const report = REPORTS.find(r => r.key === key) || REPORTS[REPORTS.length - 1];
+    const interviews = report.interviews || [];
+
+    document.getElementById("page-title").textContent = report.label + (report.preliminary ? " (preliminär)" : "");
+    document.getElementById("shared-line").innerHTML = report.shared;
+    document.getElementById("interviews-shared").textContent = "Ort visas som AF-fält, precis som för sökta jobb.";
+    document.getElementById("footnote-line").innerHTML =
+      report.rows.some(r => r.fallback)
+        ? '<span class="dot">*</span> Exakt placeringsort framgick inte av ansökan – Malmö använt som Kents egen fallback.'
+        : "";
+
+    const chips = [`<span class="chip">${report.rows.length} sökta jobb</span>`];
+    if (interviews.length > 0) chips.push(`<span class="chip">${interviews.length} intervju${interviews.length > 1 ? "er" : ""}</span>`);
+    chips.push(`<span class="chip neutral">${report.windowNote}</span>`);
+    if (report.preliminary) chips.push(`<span class="chip neutral">Ej låst – redovisas på nytt i september</span>`);
+    document.getElementById("meta-row").innerHTML = chips.join("");
+
+    document.getElementById("jobs-section").style.display = report.rows.length > 0 ? "" : "none";
+    document.getElementById("interviews-section").style.display = interviews.length > 0 ? "" : "none";
+
+    fillTable("rows", report.rows);
+    fillTable("interview-rows", interviews);
   }
 
   select.addEventListener("change", () => render(select.value));

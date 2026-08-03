@@ -35,7 +35,10 @@ redovisade till Arbetsförmedlingen. Fler kan läggas till, se
   delmängd av sökta jobb, redovisade till Arbetsförmedlingens
   aktivitetsrapport. Genererad ur ett annars privat arbetsverktyg – bara
   yrkesroll, arbetsgivare, ort och datum, aldrig kontaktpersoner eller
-  privata anteckningar.
+  privata anteckningar. [Se live-sidan →](https://kentlundgren.github.io/ArbetenSokta/Aktivitetsrapport/)
+  · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
+  (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
+  live-sidan)
 
 ## Varför bara enstaka filer?
 

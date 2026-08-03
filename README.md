@@ -4,8 +4,9 @@ Det här publika repot innehåller enstaka, medvetet utvalda filer ur ett annars
 privat projekt (jobbansökningar, CV, personlighetstester). Namnet `ArbetenSokta`
 är ett arv från det ursprungsprojektet. De allra flesta filerna där ska aldrig
 bli publika, och kan tekniskt inte pushas hit, bara de filer som explicit valts
-ut hamnar här. Just nu är det en fil: en Claude Skill som tar bort tecken på
-AI-genererad text ("humanizer"). Fler kan läggas till, se
+ut hamnar här. Just nu är det två: en Claude Skill som tar bort tecken på
+AI-genererad text ("humanizer"), och en sida med en delmängd av sökta jobb
+redovisade till Arbetsförmedlingen. Fler kan läggas till, se
 ["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
 ## Live-sida
@@ -30,6 +31,11 @@ AI-genererad text ("humanizer"). Fler kan läggas till, se
   till en tredje gren. Med skärmdumpar av de två GitHub-inställningarna
   (Default branch, Pages-källgren) som fick bytas manuellt för att
   namnbytet skulle slå igenom fullt ut.
+- [`Aktivitetsrapport/index.html`](Aktivitetsrapport/index.html) – en
+  delmängd av sökta jobb, redovisade till Arbetsförmedlingens
+  aktivitetsrapport. Genererad ur ett annars privat arbetsverktyg – bara
+  yrkesroll, arbetsgivare, ort och datum, aldrig kontaktpersoner eller
+  privata anteckningar.
 
 ## Varför bara enstaka filer?
 

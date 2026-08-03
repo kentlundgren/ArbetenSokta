@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aktivitetsrapport</title>
+<style>
+  :root {
+    --bg: #eef2f6;
+    --card: #ffffff;
+    --ink: #1c2733;
+    --ink-soft: #55677a;
+    --line: #d9e2ea;
+    --row-alt: #f3f7fa;
+    --accent: #2e75b6;
+    --accent-soft: #e4eef8;
+    --focus: #2e75b6;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121924;
+      --card: #1a2431;
+      --ink: #e7edf3;
+      --ink-soft: #93a3b3;
+      --line: #2c3949;
+      --row-alt: #202b39;
+      --accent: #6ba6dd;
+      --accent-soft: #23364a;
+      --focus: #6ba6dd;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 48px 20px;
+    margin: 0;
+  }
+
+  .sheet {
+    width: 100%;
+    max-width: 780px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  header {
+    padding: 36px 40px 28px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .eyebrow {
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-family: Charter, Georgia, "Iowan Old Style", "Times New Roman", serif;
+    font-size: 34px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    text-wrap: balance;
+  }
+
+  .lede {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 60ch;
+  }
+
+  .lede a { color: var(--accent); }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+  }
+
+  .controls label {
+    font-size: 12.5px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+
+  select {
+    font: inherit;
+    font-size: 14px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  select:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+  }
+
+  .chip {
+    font-size: 13px;
+    padding: 6px 13px;
+    border-radius: 999px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .chip.neutral {
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+
+  .section { padding: 30px 40px 8px; }
+
+  .section-title {
+    font-size: 12.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  .shared { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 20px; }
+  .shared strong { color: var(--ink); font-weight: 600; }
+
+  .table-wrap { overflow-x: auto; padding: 0 40px 12px; }
+
+  table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+
+  thead th {
+    text-align: left;
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    padding: 0 14px 10px;
+    border-bottom: 2px solid var(--line);
+  }
+
+  tbody tr:nth-child(odd) { background: var(--row-alt); }
+
+  tbody td {
+    padding: 14px 14px;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .role { font-weight: 600; color: var(--ink); }
+  .employer { display: block; color: var(--ink-soft); font-size: 13px; margin-top: 2px; }
+  .ort { white-space: nowrap; }
+  .ort .fallback { color: var(--accent); cursor: default; }
+  .date { font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--ink-soft); }
+
+  footer {
+    padding: 22px 40px 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footnote { font-size: 12.5px; color: var(--ink-soft); margin: 0; }
+  .footnote .dot { color: var(--accent); }
+
+  .source {
+    font-size: 12px;
+    color: var(--ink-soft);
+    margin: 6px 0 0;
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+  }
+
+  .source code {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 5px;
+    font-size: 11.5px;
+  }
+
+  a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+  @media (max-width: 560px) {
+    header, .section, footer { padding-left: 24px; padding-right: 24px; }
+    .table-wrap { padding-left: 24px; padding-right: 24px; }
+    h1 { font-size: 27px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header>
+    <p class="eyebrow">Aktivitetsrapport</p>
+    <h1 id="page-title">Juli 2026</h1>
+    <p class="lede">
+      Sökta jobb redovisade till Arbetsförmedlingens
+      <a href="https://arbetsformedlingen.se/for-arbetssokande/mina-sidor/aktivitetsrapportera/lagg-till-aktivitet">aktivitetsrapport</a>.
+      Kents personliga arbetsverktyg – inte en officiell sida hos
+      Arbetsförmedlingen.
+    </p>
+    <div class="controls">
+      <label for="month-select">Månad</label>
+      <select id="month-select"></select>
+    </div>
+    <div class="meta-row" id="meta-row"></div>
+  </header>
+
+  <div class="section">
+    <p class="section-title">Sökta jobb</p>
+    <p class="shared" id="shared-line"></p>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Yrkesroll &amp; arbetsgivare</th>
+          <th>Ort</th>
+          <th>Datum sökt</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+
+  <footer>
+    <p class="footnote" id="footnote-line"></p>
+    <p class="source">Genererad ur <code>Aktivitetslogg_2026.md</code> · privat arbetsverktyg.</p>
+  </footer>
+</div>
+
+<script>
+  // Ny månad: lägg till ett objekt här. Senaste månaden (sist i listan)
+  // väljs som default eftersom det alltid är den som ska rapporteras.
+  const REPORTS = [
+    {
+      key: "2026-07",
+      label: "Juli 2026",
+      windowNote: "Rapporteringsfönster: 1–14 augusti 2026.",
+      shared: "Samtliga sju: omfattning <strong>Heltid</strong> · jobbet finns i <strong>Sverige</strong> · svarade på annons: <strong>Ja</strong>.",
+      rows: [
+        { role: "Business Controller (AI-fokus)", employer: "Academic Work Sweden AB", ort: "Malmö", fallback: true, date: "2026-07-02" },
+        { role: "Verksamhetscontroller (vikariat)", employer: "Lunds kommun, Barn- och skolförvaltningen", ort: "Lund", date: "2026-07-14" },
+        { role: "Plant Controller", employer: "Paroc (via Lernia)", ort: "Hässleholm", date: "2026-07-27" },
+        { role: "Business Controller", employer: "Prima Vård Sverige AB", ort: "Malmö", date: "2026-07-28" },
+        { role: "Controller", employer: "K.A. Rasmussen", ort: "Malmö", fallback: true, date: "2026-07-29" },
+        { role: "Ekonom", employer: "Malmö stad, Serviceförvaltningen", ort: "Malmö", date: "2026-07-30" },
+        { role: "Business Controller", employer: "DHL Freight", ort: "Malmö", date: "2026-07-31" }
+      ]
+    }
+  ];
+
+  const select = document.getElementById("month-select");
+  REPORTS.forEach((r, i) => {
+    const opt = document.createElement("option");
+    opt.value = r.key;
+    opt.textContent = r.label;
+    select.appendChild(opt);
+  });
+  select.value = REPORTS[REPORTS.length - 1].key;
+
+  function render(key) {
+    const report = REPORTS.find(r => r.key === key) || REPORTS[REPORTS.length - 1];
+    document.getElementById("page-title").textContent = report.label;
+    document.getElementById("shared-line").innerHTML = report.shared;
+    document.getElementById("footnote-line").innerHTML =
+      report.rows.some(r => r.fallback)
+        ? '<span class="dot">*</span> Exakt placeringsort framgick inte av ansökan – Malmö använt som Kents egen fallback.'
+        : "";
+
+    document.getElementById("meta-row").innerHTML = `
+      <span class="chip">${report.rows.length} sökta jobb</span>
+      <span class="chip neutral">${report.windowNote}</span>
+    `;
+
+    const tbody = document.getElementById("rows");
+    tbody.innerHTML = "";
+    report.rows.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><span class="role">${row.role}</span><span class="employer">${row.employer}</span></td>
+        <td class="ort">${row.fallback ? `<span class="fallback" title="Exakt ort ej angiven i ansökan – Kents fallback">${row.ort} *</span>` : row.ort}</td>
+        <td class="date">${row.date}</td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  select.addEventListener("change", () => render(select.value));
+  render(select.value);
+</script>
+
+</body>
+</html>

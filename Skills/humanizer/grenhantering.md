@@ -70,6 +70,16 @@ reserv medan bytet gjordes.
 **Sista steget:** den gamla fjärrgrenen `main` är borttagen
 (`git push origin --delete main`). Bara `public` finns kvar på GitHub.
 
+> **Rättelse 2026-08-30:** Det här stämde inte. Vid en kontroll den 30 augusti
+> 2026 visade det sig att en `main`-gren fanns kvar på GitHub – och att den nu
+> innehöll **den privata `main`-historiken** (113 filer: CV, ansökningar, PRD,
+> personlighetstester), inte det gamla vitlistade innehållet. Den hade pushats
+> dit senast 2026-08-11. Grenen togs bort på riktigt samma dag, och läget
+> verifierades mot GitHub den här gången. Hela incidenten finns beskriven i
+> repots [`README.md`](../../README.md#när-den-privata-main-grenen-låg-publikt-aug-2026),
+> med skärmdumpar. Lärdomen: en text som säger "borttagen" är inte ett bevis –
+> `git ls-remote --heads origin` är beviset.
+
 **Bekräftelse, sett direkt på `github.com/kentlundgren/ArbetenSokta`:**
 
 ![Repot visar bara en gren, "public"](bara_public_branch.jpg)
@@ -88,9 +98,12 @@ Vad bilden faktiskt visar, tolkat rad för rad:
 - **Filträdet** under (`Skills/humanizer`, `README.md`, `index.html`) visar
   exakt den vitlistade mängden filer, ingenting utöver det.
 
-Detta är det konkreta beviset att hela mekanismen, orphan-grenen, spärren,
-namnbytet, faktiskt höll ihop från början till slut: en enda publik gren, med
-en enda avsedd samling filer, inget annat läckte igenom.
+Detta var tänkt som beviset att hela mekanismen, orphan-grenen, spärren,
+namnbytet, höll ihop. Bilden togs vid ett tillfälle då bara `public` fanns –
+men mellan då och 2026-08-30 pushades den privata `main` ändå till GitHub (se
+rättelsen ovan). Mekanismen höll alltså *inte* fullt ut. Det som räknas är att
+`git ls-remote --heads origin` visar bara `public` – och att man faktiskt kör
+det kommandot då och då, inte litar på minnet eller en gammal skärmdump.
 
 ## Kommandon för att se grennamnen
 

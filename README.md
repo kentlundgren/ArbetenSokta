@@ -9,6 +9,11 @@ AI-genererad text ("humanizer"), och en sida med en delmängd av sökta jobb
 redovisade till Arbetsförmedlingen. Fler kan läggas till, se
 ["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
+I augusti 2026 gick det ändå fel en gång: den privata `main`-grenen råkade
+hamna publikt på GitHub i ~19 dagar. Vad som hände, varför spärrarna inte
+fångade det, och hur det rättades finns dokumenterat längst ned – se
+["När den privata main-grenen låg publikt"](#när-den-privata-main-grenen-låg-publikt-aug-2026).
+
 ## Live-sida
 
 **[kentlundgren.github.io/ArbetenSokta](https://kentlundgren.github.io/ArbetenSokta/)**
@@ -65,6 +70,73 @@ ett par medvetna steg, inte en vanlig commit:
 
 Full genomgång, med skärmdumpar och en förklaring av varje kommando, finns i
 [`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md).
+
+## När den privata main-grenen låg publikt (aug 2026)
+
+Det här är en beskrivning av ett misstag, sparad här med flit så att den är lätt
+att hitta igen och lära av.
+
+### Vad som hände
+
+Tanken var att bara grenen `public` (den här, med vitlistade filer) ska finnas på
+`github.com/kentlundgren/ArbetenSokta`. Ändå hade den privata `main`-grenen
+pushats dit – commit `8f587e0`, daterad 2026-08-11 – och stod kvar som en
+**icke-standard-gren** ända till 2026-08-30. Den innehöll **113 privata filer**:
+samtliga CV:n och ansökningar (`.docx` och `.pdf`), hela `PRD/`,
+personlighetstest-syntesen, `CLAUDE.md`, kontaktuppgifter.
+
+Repot är publikt, så vem som helst kunde nå grenen via grenväljaren eller genom
+att skriva `/tree/main` i adressfältet. Den syntes däremot **inte** på repots
+förstasida, eftersom `public` är standardgren – man var tvungen att aktivt leta.
+
+![Alla privata filer låg synliga på main-grenen](bilder/arbetenSokta_tree_main_260830.jpg)
+
+### Varför spärrarna inte fångade det
+
+- **Pre-push-hooken skyddar bara den klon den ligger i.** `.git/hooks/` följer
+  aldrig med en `git clone`, kan förbigås (`--no-verify`, en del GUI-operationer)
+  och saknas helt i en ny klon. Den är ett lokalt skyddsnät, inte en spärr som
+  gäller överallt. Exakt hur `main` nådde GitHub den 11 augusti är inte helt
+  klarlagt – troligen en push från en väg där hooken inte kördes.
+- **En icke-standard-gren på ett publikt repo är fortfarande publik.** Inget i
+  GitHub hindrade `main` från att existera där vid sidan av `public`.
+- **`grenhantering.md` påstod att fjärr-`main` redan var borttagen** – utan att
+  det stämde av mot verkligheten på GitHub. En text som säger "det här är fixat"
+  är inte samma sak som att det är fixat.
+
+![Branches-vyn på GitHub – main markerad "ska tas bort"](bilder/arbetenSokta_main_grenen_ska_tas_bort_260830.jpg)
+
+### Hur det rättades (2026-08-30)
+
+```bash
+git push origin --delete main          # tar bort den privata grenen från GitHub
+git ls-remote --heads origin           # verifierar: nu finns bara "public"
+git fetch --prune                      # städar bort lokal referens origin/main
+git branch --unset-upstream main       # lokal main spårar inte längre någon fjärrgren
+```
+
+Sista raden gör att ingen git-klient (Cursor, VS Code) längre visar en
+"Sync Changes / N↑"-knapp för `main` eller föreslår att pusha den.
+
+![github.com/kentlundgren/ArbetenSokta/tree/main ger nu 404 – ingen publik main-gren](bilder/arbetenSokta_tree_main_finns_inte_260830.jpg)
+
+### Vad som kvarstår
+
+Att ta bort en gren tömmer inte historiken direkt: borttagna commits ligger kvar
+som onåbara objekt på GitHub ett tag och kan nås av någon som har den exakta
+commit-hashen, och cachade sidvyer kan dröja. Materialet var publikt i ~19 dagar
+(repot hade 0 forks, 0 stars, 0 watchers under tiden). Vill man gå längre får man
+kontakta GitHub Support för att rensa cache.
+
+### Starkare skydd framåt (att överväga)
+
+- **Gör repot privat** och lägg det som verkligen ska vara publikt (innehållet på
+  `public`-grenen) i ett separat, dedikerat publikt repo. Då kan en felaktig push
+  av privat innehåll aldrig bli publik – spärren blir strukturell, inte beroende
+  av en lokal hook.
+- Alternativt en **GitHub-ruleset** som förbjuder att andra grennamn än `public`
+  skapas på fjärren.
+- Behåll den lokala hooken som extra lager, men lita inte på den som enda barriär.
 
 ## Källa till skill-strukturen
 

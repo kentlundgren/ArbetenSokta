@@ -62,55 +62,72 @@ En ärlig not: syftet är inte att lura en AI-detektor (de är opålitliga och g
 både falska larm och missar). Syftet är att texten faktiskt ska bli bra – tåla att
 läsas högt, ha en röst, säga något konkret.
 
-### Kort promt (att klistra in)
+Det finns tre situationer. Den vanligaste – skriva en ny text från grunden och få
+den människolik direkt – står först.
+
+### 1. Skriva en ny text från grunden
+
+Du ger bara ämnet. Skillnad mot att skriva om en färdig text: det finns inga fakta
+att bevara, så AI:n kan hitta på – därför ber promten uttryckligen om att osäkra
+påståenden markeras och listas.
+
+**Minimal:**
+
+> Skriv en text om **[X, t.ex. Frans G. Bengtssons liv och leverne]**. Jag vill att
+> den läser som skriven av en människa, inte en AI – följ mönsterlistan i
+> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+> (kan du inte öppna länken, säg till så klistrar jag in den). Hitta inte på fakta;
+> markera det du är osäker på med `[osäker]`. Avsluta med ett omdöme 1–5 på hur
+> AI-skriven texten känns (1 = människa, 5 = uppenbart AI) och de två svagaste
+> ställena.
+
+**Fylligare:**
+
+> Skriv en text om **[X]**.
+>
+> Typ av text: [essä / blogginlägg / personligt hållen betraktelse /
+> uppslagsverksartikel]. Längd: ~[N] ord. Läsare: [allmänbildad, inte specialist].
+> Ton: [nyfiken och personlig / saklig / lätt ironisk]. Har jag inte sagt något –
+> välj själv och skriv en rad om vad du valde.
+>
+> Jag vill att texten läser som skriven av en människa. Följ mönsterlistan i
+> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+> (råtext; kan du inte öppna den, säg till så klistrar jag in den). Den bygger på
+> Wikipedias *[Signs of AI
+> writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)*. Konkret:
+> variera meningslängd, ha en åsikt, konkreta detaljer framför svävande "betydelse",
+> inga treregel-ramsor, inget "inte bara X utan Y", ingen peppig sammanfattande
+> avslutning, sparsamt med tankstreck och fetstil.
+>
+> Fakta: hitta inte på. Osäker på ett årtal, ett verk, ett citat – skriv
+> ungefärligt eller markera `[osäker]` hellre än att gissa exakt.
+>
+> Arbeta i tre steg, visa bara steg 2 och 3:
+> 1. (för dig själv) utkast → städa mot mönsterlistan.
+> 2. Den färdiga texten.
+> 3. En kort not: vilka AI-mönster du städade bort, ett omdöme 1–5 på hur AI-skriven
+>    den känns nu (1 = människa, 5 = uppenbart AI) med de två svagaste ställena, och
+>    en lista på de faktapåståenden du är minst säker på så jag kan kolla dem.
+
+### 2. Skriva om en text du redan har
 
 > Skriv om texten nedan så att den läser som något en människa faktiskt skrivit –
 > naturlig rytm, egen röst, konkreta detaljer, inga AI-tics. Använd mönsterlistan i
 > `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
 > som checklista (kan du inte öppna länken, säg till så klistrar jag in den).
-> Behåll innebörd, fakta och siffror. Matcha [min röst / tonen i texten runt
-> omkring / en neutral saklig ton]. Gör sedan ett andra pass och redovisa: vilka
-> mönster ur listan fanns i utkastet och vad du ändrade, samt ett omdöme 1–5 på hur
-> AI-skriven slutversionen fortfarande känns (1 = läser som en människa, 5 =
-> uppenbart AI), med de två svagaste ställena namngivna.
+> Behåll innebörd, fakta och siffror – hitta inte på, ta inte bort sakinnehåll för
+> "flytets" skull. Matcha [min röst – här är ett stycke jag själv skrivit: «…» /
+> tonen i texten runt omkring / en neutral saklig ton]. Längd ungefär som
+> originalet.
+>
+> Visa: (1) den omskrivna texten, (2) vilka mönster ur listan som fanns i mitt
+> original och vad du bytte ut – citera fraserna, (3) ett omdöme 1–5 på hur
+> AI-skriven slutversionen känns (1 = människa, 5 = uppenbart AI) med de två
+> svagaste ställena.
 >
 > TEXT: […]
 
-### Fylligare promt (när det är viktigt)
-
-> Skriv om texten längst ner så att den läser som något en människa faktiskt
-> skrivit. Inte för att pricka en AI-detektor, utan för att det ska bli bra text:
-> naturlig meningsrytm, en egen röst, konkreta detaljer istället för svävande
-> formuleringar.
->
-> Använd mönsterlistan i
-> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
-> som checklista. Den bygger på Wikipedias *[Signs of AI
-> writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)*. Kan du
-> inte öppna länken, be mig klistra in den.
->
-> Ramar:
-> - Behåll innebörd, fakta och siffror. Hitta inte på; ta inte bort sakinnehåll för
->   "flytets" skull.
-> - Behåll teknisk/facklig precision där den finns.
-> - Röst: [skriv som jag – här är ett stycke jag själv skrivit: «…»] / [matcha
->   tonen i texten runt omkring] / [neutral, saklig ton].
-> - Längd ungefär som originalet (± en tredjedel).
->
-> Arbeta i tre steg och visa alla tre:
-> 1. Ett första omskrivet utkast.
-> 2. En granskning: vilka av mönstren i checklistan fanns i mitt original (och i
->    ditt första utkast), och vad du gjorde åt varje. Var specifik – citera de
->    fraser du bytte ut.
-> 3. En slutversion, reviderad efter granskningen. Avsluta med ett omdöme: på en
->    skala 1–5, hur troligt är det att en uppmärksam läsare tänker "det här är
->    AI-skrivet"? (1 = läser som en människa, 5 = uppenbart AI.) Namnge de två
->    ställen som drar upp siffran mest, även om de är små.
->
-> TEXT:
-> […]
-
-### Bara bedöma en text (utan att skriva om den)
+### 3. Bara bedöma en text (utan att skriva om den)
 
 > Bedöm hur AI-skriven texten nedan är. Gå igenom den mot mönsterlistan i
 > `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
@@ -123,12 +140,13 @@ läsas högt, ha en röst, säga något konkret.
 ### Tips
 
 - **Ge ett röstprov.** SKILL.md har ett eget avsnitt "Röstkalibering" – ett stycke
-  du själv skrivit gör omskrivningen märkbart bättre än instruktionen "låt
-  naturlig".
-- **Kör omdömet före och efter.** Be om 1–5-siffran på originalet också, så ser du
-  vad passet faktiskt åstadkom.
+  du själv skrivit gör resultatet märkbart bättre än instruktionen "låt naturlig".
+- **Kör omdömet både före och efter** (i situation 2 och 3), så ser du vad passet
+  faktiskt åstadkom.
 - **Lita inte blint på siffran.** Den är AI:ns egen självskattning. Läs alltid
   slutresultatet högt själv – det är det bästa testet.
+- **Faktakolla ändå** (situation 1). Markeringen `[osäker]` fångar det AI:n *vet*
+  att den är osäker på, inte det den har fel om utan att veta det.
 
 ## Varför bara enstaka filer?
 

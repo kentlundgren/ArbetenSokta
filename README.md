@@ -30,12 +30,11 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   utan delad historik och en pre-push-hook som teknisk spärr, med skärmdumpar
   och en genomgång av vad varje git-kommando i processen faktiskt gör.
 - [`Skills/humanizer/grenhantering.md`](Skills/humanizer/grenhantering.md) –
-  vilka grenar som finns (bara två, lokalt), och hur en namnkrock mellan den
+  vilka grenar som finns (bara två, lokalt), hur en namnkrock mellan den
   privata `main`-grenen och fjärrgrenens ursprungliga namn upptäcktes och
-  åtgärdades genom att döpa om fjärrgrenen till `public`, inte genom att lägga
-  till en tredje gren. Med skärmdumpar av de två GitHub-inställningarna
-  (Default branch, Pages-källgren) som fick bytas manuellt för att
-  namnbytet skulle slå igenom fullt ut.
+  åtgärdades genom att döpa om fjärrgrenen till `public`, samt en rättelse:
+  påståendet att fjärr-`main` var borttagen stämde inte (se incidenten nedan).
+  Med skärmdumpar av GitHub-inställningarna som fick bytas manuellt.
 - [`Aktivitetsrapport/index.html`](Aktivitetsrapport/index.html) – en
   delmängd av sökta jobb, redovisade till Arbetsförmedlingens
   aktivitetsrapport. Genererad ur ett annars privat arbetsverktyg – bara
@@ -120,23 +119,80 @@ Sista raden gör att ingen git-klient (Cursor, VS Code) längre visar en
 
 ![github.com/kentlundgren/ArbetenSokta/tree/main ger nu 404 – ingen publik main-gren](bilder/arbetenSokta_tree_main_finns_inte_260830.jpg)
 
-### Vad som kvarstår
+### Nytt skydd tillagt samma dag: en GitHub-ruleset (barriär 2)
 
-Att ta bort en gren tömmer inte historiken direkt: borttagna commits ligger kvar
-som onåbara objekt på GitHub ett tag och kan nås av någon som har den exakta
-commit-hashen, och cachade sidvyer kan dröja. Materialet var publikt i ~19 dagar
-(repot hade 0 forks, 0 stars, 0 watchers under tiden). Vill man gå längre får man
-kontakta GitHub Support för att rensa cache.
+Den lokala pre-push-hooken (barriär 1) skyddar bara den dator den ligger på. Som
+barriär 2 lades en **branch-ruleset** till på GitHub-servern den 2026-08-30:
 
-### Starkare skydd framåt (att överväga)
+- **Namn:** "Endast grenen public far finnas" · **id:** 21871865 ·
+  **enforcement:** `active` · **bypass:** ingen (gäller även repo-ägaren).
+- **Vad den gör:** blockerar `creation` och `update` av *alla grennamn utom
+  `public`* på fjärren. Går alltså inte att skapa `main` (eller någon annan gren)
+  på GitHub, oavsett vilken dator/klon pushen kommer från och oavsett användare.
+- **Hur den skapades** (GitHub CLI, en enda anrop):
 
-- **Gör repot privat** och lägg det som verkligen ska vara publikt (innehållet på
-  `public`-grenen) i ett separat, dedikerat publikt repo. Då kan en felaktig push
-  av privat innehåll aldrig bli publik – spärren blir strukturell, inte beroende
-  av en lokal hook.
-- Alternativt en **GitHub-ruleset** som förbjuder att andra grennamn än `public`
-  skapas på fjärren.
-- Behåll den lokala hooken som extra lager, men lita inte på den som enda barriär.
+  ```bash
+  gh api -X POST repos/kentlundgren/ArbetenSokta/rulesets --input - <<'JSON'
+  {
+    "name": "Endast grenen public far finnas",
+    "target": "branch",
+    "enforcement": "active",
+    "conditions": { "ref_name": { "include": ["~ALL"], "exclude": ["refs/heads/public"] } },
+    "rules": [ { "type": "creation" }, { "type": "update" } ],
+    "bypass_actors": []
+  }
+  JSON
+  ```
+
+  Samma sak går att göra i webben: repo → **Settings → Rules → Rulesets → New branch ruleset**,
+  Target = "All branches", lägg till exclude-mönstret `refs/heads/public`, kryssa i
+  "Restrict creations" och "Restrict updates", Enforcement = Active, ingen bypass.
+- **Verifierat:** ett försök att pusha en testgren avvisades av servern med
+  `Cannot create ref due to creations being restricted`, och
+  `gh api repos/kentlundgren/ArbetenSokta/rules/branches/main` bekräftar att reglerna
+  gäller `main` men inte `public`.
+- **Hantera/ta bort den senare:** `gh api repos/kentlundgren/ArbetenSokta/rulesets`
+  listar den, eller repo → Settings → Rules → Rulesets i webben.
+
+### Är det omöjligt nu att av misstag lägga ut privata filer?
+
+Nästan – men inte bokstavligt. Efter 2026-08-30 finns **två oberoende barriärer**:
+
+| # | Barriär | Var | Skyddar mot |
+|---|---|---|---|
+| 1 | Pre-push-hook (`.git/hooks/pre-push`) | Lokalt, på Kents dator | Push av fel gren eller fil från *den* datorn |
+| 2 | Branch-ruleset (id 21871865) | GitHub-servern | Att någon gren utom `public` skapas – från *vilken* dator/klon som helst, även av Kent |
+
+De vanliga misstagsvägarna (klicka "Sync" i Cursor, `git push origin main`, pusha
+från en ny klon utan hook) är nu stängda. Kvar finns bara två teoretiska vägar:
+(a) medvetet lägga en privat fil på vitlistan och pusha den till `public`, eller
+(b) någon med admin stänger av rulesetet. Det som skulle göra det *helt* omöjligt:
+
+- **Gör repot privat** och flytta det som verkligen ska vara publikt (innehållet på
+  `public`-grenen) till ett separat, dedikerat publikt repo. Då blir spärren
+  strukturell – det finns inget privat i det publika repot att läcka.
+
+Historik-fotnot: att ta bort `main`-grenen tömmer inte GitHubs historik direkt –
+borttagna commits ligger kvar som onåbara objekt ett tag och kan nås av någon som
+har den exakta commit-hashen; cachade sidvyer kan dröja. Materialet var publikt i
+~19 dagar (0 forks, 0 stars, 0 watchers). För full rensning: kontakta GitHub Support.
+
+### Var det här är dokumenterat (så det går att hitta igen)
+
+- **Den här README:n**, avsnittet ovan – på GitHub:
+  <https://github.com/kentlundgren/ArbetenSokta/blob/public/README.md#när-den-privata-main-grenen-låg-publikt-aug-2026>
+- **`Skills/humanizer/grenhantering.md`** – grendetaljerna och rättelsen:
+  <https://github.com/kentlundgren/ArbetenSokta/blob/public/Skills/humanizer/grenhantering.md>
+  Filen ligger på grenen `public` på GitHub. Lokalt syns den när `github-public` är
+  utcheckad; en kopia finns även på `main` sedan 2026-08-30 så den syns i Cursor
+  under vanligt arbete.
+- **`CLAUDE.md` avsnitt 1B** (privat, bara på `main` lokalt) – kanonisk regeltext,
+  "Två barriärer mot att privat innehåll når GitHub".
+- **Claudes minnesanteckning** `feedback_no_push_arbetensokta.md` – ligger *inte* i
+  repot utan i Claudes minnesmapp på datorn:
+  `C:\Users\kentl\.claude\projects\C--Users-kentl-OneDrive-AI-Claude-ArbetenSokta\memory\`.
+  Den läses in automatiskt av Claude vid varje ny session; öppna den i en
+  texteditor om du vill läsa den själv.
 
 ## Källa till skill-strukturen
 

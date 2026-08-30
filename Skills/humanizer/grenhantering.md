@@ -14,7 +14,21 @@ till, och ska inte läggas till:
 | `main` | Allt: CV, ansökningar, personlighetstester, alla skills. Privat. | Nej, aldrig (spärrat, se `ArbetenSokta/CLAUDE.md` avsnitt 1B). |
 | `github-public` | Bara de filer som står i vitlistan (`ALLOWED_FILES` i `.git/hooks/pre-push`). Publikt. | Ja, det är den enda som får det. |
 
-**På GitHub finns bara en enda gren**, den som `github-public` pushas till.
+**På GitHub finns bara en enda gren**, den som `github-public` pushas till (den
+heter `public` på fjärren – se namnkrocken nedan).
+
+## Två barriärer mot att privat innehåll når GitHub (sedan 2026-08-30)
+
+1. **Lokal pre-push-hook** (`.git/hooks/pre-push`) – tillåter bara push av grenen
+   `github-public`, och bara filer på vitlistan. Skyddar den dator hooken ligger
+   på. Följer inte med en `git clone`.
+2. **GitHub branch-ruleset** ("Endast grenen public far finnas", id 21871865,
+   `enforcement: active`, ingen bypass) – blockerar att någon gren utom `public`
+   skapas eller uppdateras på fjärren, oavsett dator/klon och även för repo-ägaren.
+   Kontrollera: `gh api repos/kentlundgren/ArbetenSokta/rulesets`. Fullständig
+   beskrivning i repots `README.md`.
+
+Barriär 2 lades till efter incidenten nedan, då barriär 1 visade sig otillräcklig.
 
 ## Namnkrocken som uppstod, och varför den var förvirrande
 

@@ -148,6 +148,32 @@ påståenden markeras och listas.
 - **Faktakolla ändå** (situation 1). Markeringen `[osäker]` fångar det AI:n *vet*
   att den är osäker på, inte det den har fel om utan att veta det.
 
+### Ett testat exempel
+
+Den fylliga promten i situation 1 har körts skarpt en gång: ämne "Frans G.
+Bengtssons liv och leverne", typ "personligt hållen betraktelse", ton "nyfiken och
+personlig men ändå saklig". Resultatet ligger här:
+[`FransGBengtsson.md`](FransGBengtsson.md).
+
+AI:ns egen självskattning av den färdiga texten: **2 av 5** (1 = människa, 5 =
+uppenbart AI). Svagast enligt AI:n själv: (a) en rad med tre korta meningsfragment
+på rad som fortfarande läser som en uppräkning, (b) ett sista stycke som knyter
+tillbaka till inledningen lite för prydligt.
+
+Vad passet städade bort mellan utkast och färdig text: ett uppblåst "markerade en
+vändpunkt i svensk litteratur"-anslag, en particip-fras ("cementerade hans rykte
+som…"), en treregel-rad med adjektiv, en negativ parallellism ("inte bara flykt,
+utan…"), ett par tankstreck, och en generisk avrundning ("läses än idag och lär så
+förbli").
+
+Faktainstruktionen gjorde att AI:n flaggade ett tiotal påståenden som osäkra – bl.a.
+faderns yrke och gods, årtal för debuten "Tärningkast" och för licentiatexamen,
+utgivningsåren för Karl XII-biografin och "Röde Orm", en antologi han ska ha vägrat
+medverka i, och att han aldrig invaldes i Svenska Akademien. Det visar att
+instruktionen fungerar – men också att en text skriven ur minnet om ett smalt ämne
+blir full av gardering. Ge AI:n webbåtkomst eller en källa för att få färre
+frågetecken.
+
 ## Varför bara enstaka filer?
 
 De flesta filerna i ursprungsprojektet innehåller personuppgifter (kontaktuppgifter,

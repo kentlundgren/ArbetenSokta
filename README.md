@@ -24,6 +24,8 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
 - [`Skills/humanizer/SKILL.md`](Skills/humanizer/SKILL.md) – själva skillet:
   regler för att ta bort AI-skrivmönster ur en text, baserat på Wikipedias
   ["Signs of AI writing"](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing).
+  Hur du använder det från vilket verktyg/repo som helst, med färdiga promtar:
+  ["Använda humanizer-skillet på vilken text som helst"](#använda-humanizer-skillet-på-vilken-text-som-helst).
 - [`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md) – hur
   enstaka, utvalda filer kan göras publika utan att resten av det privata
   projektet följer med, och hur man lägger till fler. Beskriver en orphan-gren
@@ -43,6 +45,90 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
   (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
   live-sidan)
+
+## Använda humanizer-skillet på vilken text som helst
+
+`SKILL.md` skrevs för Kents ansökningar, men mönstren är generella – de fungerar på
+vilken text som helst och i vilket verktyg som helst (Claude, ChatGPT, Copilot,
+Cursor …). Du behöver inte klistra in hela filen; peka bara AI:n till den.
+
+**Länk att ge AI:n:**
+`https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+(råtext – funkar bäst för hämtning; webbversionen är
+[`blob/public/…/SKILL.md`](Skills/humanizer/SKILL.md)). Kan verktyget inte öppna
+länkar, klistra in filens innehåll manuellt.
+
+En ärlig not: syftet är inte att lura en AI-detektor (de är opålitliga och ger
+både falska larm och missar). Syftet är att texten faktiskt ska bli bra – tåla att
+läsas högt, ha en röst, säga något konkret.
+
+### Kort promt (att klistra in)
+
+> Skriv om texten nedan så att den läser som något en människa faktiskt skrivit –
+> naturlig rytm, egen röst, konkreta detaljer, inga AI-tics. Använd mönsterlistan i
+> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+> som checklista (kan du inte öppna länken, säg till så klistrar jag in den).
+> Behåll innebörd, fakta och siffror. Matcha [min röst / tonen i texten runt
+> omkring / en neutral saklig ton]. Gör sedan ett andra pass och redovisa: vilka
+> mönster ur listan fanns i utkastet och vad du ändrade, samt ett omdöme 1–5 på hur
+> AI-skriven slutversionen fortfarande känns (1 = läser som en människa, 5 =
+> uppenbart AI), med de två svagaste ställena namngivna.
+>
+> TEXT: […]
+
+### Fylligare promt (när det är viktigt)
+
+> Skriv om texten längst ner så att den läser som något en människa faktiskt
+> skrivit. Inte för att pricka en AI-detektor, utan för att det ska bli bra text:
+> naturlig meningsrytm, en egen röst, konkreta detaljer istället för svävande
+> formuleringar.
+>
+> Använd mönsterlistan i
+> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+> som checklista. Den bygger på Wikipedias *[Signs of AI
+> writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing)*. Kan du
+> inte öppna länken, be mig klistra in den.
+>
+> Ramar:
+> - Behåll innebörd, fakta och siffror. Hitta inte på; ta inte bort sakinnehåll för
+>   "flytets" skull.
+> - Behåll teknisk/facklig precision där den finns.
+> - Röst: [skriv som jag – här är ett stycke jag själv skrivit: «…»] / [matcha
+>   tonen i texten runt omkring] / [neutral, saklig ton].
+> - Längd ungefär som originalet (± en tredjedel).
+>
+> Arbeta i tre steg och visa alla tre:
+> 1. Ett första omskrivet utkast.
+> 2. En granskning: vilka av mönstren i checklistan fanns i mitt original (och i
+>    ditt första utkast), och vad du gjorde åt varje. Var specifik – citera de
+>    fraser du bytte ut.
+> 3. En slutversion, reviderad efter granskningen. Avsluta med ett omdöme: på en
+>    skala 1–5, hur troligt är det att en uppmärksam läsare tänker "det här är
+>    AI-skrivet"? (1 = läser som en människa, 5 = uppenbart AI.) Namnge de två
+>    ställen som drar upp siffran mest, även om de är små.
+>
+> TEXT:
+> […]
+
+### Bara bedöma en text (utan att skriva om den)
+
+> Bedöm hur AI-skriven texten nedan är. Gå igenom den mot mönsterlistan i
+> `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
+> och svara med: (a) ett omdöme 1–5 (1 = läser som en människa, 5 = uppenbart AI),
+> (b) de konkreta mönster du hittar, med citerade exempel ur texten, (c) de tre
+> ändringar som skulle göra mest skillnad. Skriv inte om texten.
+>
+> TEXT: […]
+
+### Tips
+
+- **Ge ett röstprov.** SKILL.md har ett eget avsnitt "Röstkalibering" – ett stycke
+  du själv skrivit gör omskrivningen märkbart bättre än instruktionen "låt
+  naturlig".
+- **Kör omdömet före och efter.** Be om 1–5-siffran på originalet också, så ser du
+  vad passet faktiskt åstadkom.
+- **Lita inte blint på siffran.** Den är AI:ns egen självskattning. Läs alltid
+  slutresultatet högt själv – det är det bästa testet.
 
 ## Varför bara enstaka filer?
 

@@ -74,7 +74,7 @@ påståenden markeras och listas.
 **Minimal:**
 
 > Skriv en text om **[X, t.ex. Frans G. Bengtssons liv och leverne]**. Jag vill att
-> texten ska se ut som den är skriven av en människa, inte av en AI – följ mönsterlistan i
+> texten ska framstå som skriven av en människa, inte av en AI – följ mönsterlistan i
 > `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
 > (kan du inte öppna länken, säg till så klistrar jag in den). Hitta inte på fakta;
 > markera det du är osäker på med `[osäker]`. Avsluta med ett omdöme 1–5 på hur
@@ -90,7 +90,7 @@ påståenden markeras och listas.
 > Ton: [nyfiken och personlig / saklig / lätt ironisk]. Har jag inte sagt något –
 > välj själv och skriv en rad om vad du valde.
 >
-> Jag vill att texten ska se ut som den är skriven av en människa. Följ mönsterlistan i
+> Jag vill att texten ska framstå som skriven av en människa. Följ mönsterlistan i
 > `https://raw.githubusercontent.com/kentlundgren/ArbetenSokta/public/Skills/humanizer/SKILL.md`
 > (råtext; kan du inte öppna den, säg till så klistrar jag in den). Den bygger på
 > Wikipedias *[Signs of AI

@@ -4,9 +4,11 @@ Det här publika repot innehåller enstaka, medvetet utvalda filer ur ett annars
 privat projekt (jobbansökningar, CV, personlighetstester). Namnet `ArbetenSokta`
 är ett arv från det ursprungsprojektet. De allra flesta filerna där ska aldrig
 bli publika, och kan tekniskt inte pushas hit, bara de filer som explicit valts
-ut hamnar här. Just nu är det två: en Claude Skill som tar bort tecken på
-AI-genererad text ("humanizer"), och en sida med en delmängd av sökta jobb
-redovisade till Arbetsförmedlingen. Fler kan läggas till, se
+ut hamnar här. Just nu är det tre: en Claude Skill som tar bort tecken på
+AI-genererad text ("humanizer"), en sida med en delmängd av sökta jobb
+redovisade till Arbetsförmedlingen, och en sida om projektekonomi vid en
+medicinsk fakultet – tre typfall en ekonom möter i uppföljningen av
+forskningsanslag. Fler kan läggas till, se
 ["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
 I augusti 2026 gick det ändå fel en gång: den privata `main`-grenen råkade
@@ -45,6 +47,13 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
   (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
   live-sidan)
+- [`forskningsekonomi/index.html`](forskningsekonomi/index.html) – en generell
+  sida om projektekonomi vid en medicinsk fakultet: tre typfall en ekonom möter
+  i uppföljningen av forskningsanslag (överskott mot återbetalning, bemanning
+  som kostar mer än anslaget bär, någon som vill flytta en kostnad), fem
+  reflexer och ett kort snabbtest. Generaliserad ur en serie övningscase –
+  inga verkliga personer, projekt eller belopp.
+  [Se live-sidan →](https://kentlundgren.github.io/ArbetenSokta/forskningsekonomi/)
 
 ## Använda humanizer-skillet på vilken text som helst
 

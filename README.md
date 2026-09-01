@@ -7,8 +7,9 @@ bli publika, och kan tekniskt inte pushas hit, bara de filer som explicit valts
 ut hamnar här. Just nu är det tre: en Claude Skill som tar bort tecken på
 AI-genererad text ("humanizer"), en sida med en delmängd av sökta jobb
 redovisade till Arbetsförmedlingen, och en sida om projektekonomi vid en
-medicinsk fakultet – tre typfall en ekonom möter i uppföljningen av
-forskningsanslag. Fler kan läggas till, se
+medicinsk fakultet – typfall i anslagsuppföljning, en presentation av Kent
+Lundgren som söker en ekonomtjänst där, och en liten kalkyl för om ett
+forskningsprojekt ligger i fas. Fler kan läggas till, se
 ["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
 I augusti 2026 gick det ändå fel en gång: den privata `main`-grenen råkade
@@ -47,13 +48,16 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
   (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
   live-sidan)
-- [`forskningsekonomi/index.html`](forskningsekonomi/index.html) – en generell
-  sida om projektekonomi vid en medicinsk fakultet: tre typfall en ekonom möter
-  i uppföljningen av forskningsanslag (överskott mot återbetalning, bemanning
-  som kostar mer än anslaget bär, någon som vill flytta en kostnad), fem
-  reflexer och ett kort snabbtest. Generaliserad ur en serie övningscase –
-  inga verkliga personer, projekt eller belopp.
-  [Se live-sidan →](https://kentlundgren.github.io/ArbetenSokta/forskningsekonomi/)
+- [`forskningsekonomi/`](forskningsekonomi/) – en sida om projektekonomi vid en
+  medicinsk fakultet, med fyra ingångar: **tre typfall** i anslagsuppföljning
+  (överskott mot återbetalning, bemanning som kostar mer än anslaget bär, någon
+  som vill flytta en kostnad), med fem reflexer och ett snabbtest – generaliserat
+  ur övningscase, inga verkliga personer eller belopp; **en presentation av Kent
+  Lundgren** i fyra delar; **sex skäl** till varför han skulle trivas med
+  [ekonomtjänsten vid Medicinska institutionskansliet i Malmö](https://vakanser.se/jobb/ekonom+till+medicinska+institutionskansliet+i+malmo+3/);
+  och **en liten kalkyl** – "ligger projektet i fas?". Se
+  [`forskningsekonomi/README.md`](forskningsekonomi/README.md) ·
+  [live-sidan →](https://kentlundgren.github.io/ArbetenSokta/forskningsekonomi/)
 
 ## Använda humanizer-skillet på vilken text som helst
 

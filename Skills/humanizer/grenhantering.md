@@ -30,6 +30,12 @@ heter `public` på fjärren – se namnkrocken nedan).
 
 Barriär 2 lades till efter incidenten nedan, då barriär 1 visade sig otillräcklig.
 
+## Vad som aldrig får på vitlistan
+
+Hela mappen `Intervju/` (talarstöd, Word, markdown, HTML) stannar på lokal `main`.
+Den ska **inte** läggas till i `ALLOWED_FILES`. Det är en annan sak än den
+redan publika mappen `forskningsekonomi/` i repots rot.
+
 ## Namnkrocken som uppstod, och varför den var förvirrande
 
 När `github-public` först pushades, döptes fjärrgrenen till "main":

@@ -46,6 +46,11 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
   (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
   live-sidan)
+- [`Publika_sidor_guide.md`](Publika_sidor_guide.md) – steg för steg: hur de publika
+  sidorna hanteras utan att fildatumen i det privata projektet ändras, med en
+  andra arbetsmapp (`git worktree`) för grenen `github-public`. Hur man lägger
+  till, hämtar, tar bort och publicerar en sida, vilka skydd som finns och en
+  felsökningstabell. Skapad 2026-10-01 av Kent tillsammans med Claude.
 - ~~`forskningsekonomi/`~~ – **borttagen 2026-10-01.** En sida om
   projektekonomi vid en medicinsk fakultet (typfall i anslagsuppföljning, en
   presentation av Kent Lundgren och en liten kalkyl). Kent beslutade att ta
@@ -209,6 +214,8 @@ Full genomgång, med skärmdumpar och en förklaring av varje kommando, finns i
 [`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md).
 
 ## Se och arbeta i `github-public` utan att ändra filernas datum (git worktree)
+
+*Den fullständiga guiden finns i [`Publika_sidor_guide.md`](Publika_sidor_guide.md).*
 
 **Problemet.** Grenen `github-public` innehåller bara en handfull filer, medan
 `main` har hela det privata projektet. Gör man `git checkout github-public` i

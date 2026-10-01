@@ -208,6 +208,52 @@ ett par medvetna steg, inte en vanlig commit:
 Full genomgång, med skärmdumpar och en förklaring av varje kommando, finns i
 [`Skills/humanizer/skillprocess.md`](Skills/humanizer/skillprocess.md).
 
+## Se och arbeta i `github-public` utan att ändra filernas datum (git worktree)
+
+**Problemet.** Grenen `github-public` innehåller bara en handfull filer, medan
+`main` har hela det privata projektet. Gör man `git checkout github-public` i
+projektmappen tar git bort alla privata filer från disken, och när man går
+tillbaka till `main` skapas de på nytt. OneDrive och Utforskaren tolkar det som
+nya filer och sätter datumen till dagens datum. Ingenting går förlorat, men
+sorteringen på ändringsdatum blir missvisande.
+
+**Lösningen: en andra arbetsmapp med `git worktree`.** Samma repo (samma
+`.git`) kan ha flera mappar utcheckade samtidigt, en per gren. Huvudmappen
+står kvar på `main` och rörs aldrig. `github-public` får en egen mapp bredvid.
+
+**Receptet, steg för steg** (kommandona körs i terminalen i projektets
+huvudmapp, medan du står på `main`):
+
+1. **Kontrollera var du står:** `git branch --show-current` ska svara `main`.
+2. **Hämta senaste från GitHub:** `git fetch origin`
+3. **Skapa den andra mappen, en enda gång** (välj en plats utanför OneDrive,
+   sökvägen är ett exempel):
+   `git worktree add "D:\ArbetenSokta_public" github-public`
+4. **Öppna den nya mappen** i Cursor (File → Open Folder, eller ett eget
+   fönster). Där ser du bara `github-public`-filerna. Huvudmappen visar
+   fortfarande `main` med alla filer och oförändrade datum.
+5. **Se vad som finns och vad som hänt:** `git worktree list` visar vilka
+   mappar som finns och vilken gren var och en står på. `git log --oneline -5`
+   i den nya mappen visar de senaste ändringarna.
+6. **Hämta nya ändringar** (t.ex. något som gjorts direkt på GitHub): kör
+   `git pull` i den nya mappen. Då ändras bara de filer som faktiskt ändrats.
+7. **Ändra och publicera** görs i den nya mappen: ändra filen, `git add`,
+   `git commit`, och `git push origin github-public:public`. Pre-push-hooken
+   i `.git/hooks` gäller även där, eftersom `.git` delas.
+8. **Städa när du är klar:** `git worktree remove "D:\ArbetenSokta_public"`.
+   Det tar bara bort mappen, inte grenen eller något på GitHub.
+
+**Bra att veta:**
+
+- En gren kan bara vara utcheckad i en mapp åt gången. Försöker du köra
+  `git checkout github-public` i huvudmappen medan den andra mappen finns får du
+  `fatal: 'github-public' is already used by worktree at ...`. Det är ett skydd,
+  inte ett fel.
+- Gå inte in i den nya mappen och byt gren där. Låt den stå på `github-public`.
+- Push av `main` är fortfarande förbjuden. Worktree ändrar inget av det.
+- Receptet provades 2026-10-01 med en tillfällig mapp. Huvudmappens
+  filer hade identiska datum före och efter.
+
 ## När den privata main-grenen låg publikt (aug 2026)
 
 Det här är en beskrivning av ett misstag, sparad här med flit så att den är lätt

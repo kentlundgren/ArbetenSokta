@@ -37,6 +37,16 @@ dagens datum.
 | `C:\Users\kentl\OneDrive\AI\Claude\ArbetenSokta` | `main` | allt privat arbete. Står kvar på `main` och rörs aldrig av publicering. |
 | `D:\ArbetenSokta_public` | `github-public` | allt som ska bli publikt. Egen mapp, utanför OneDrive. |
 
+### Repo och worktree: vad är skillnaden?
+
+De är delvis samma sak. Repot är historiken (alla commits, grenar, inställningar
+och hookar, lagrade i `.git`) och finns en gång. En worktree är en mapp med de
+filer en viss gren har just nu. Hos Kent finns två worktrees mot samma repo:
+huvudmappen (`main`) och `D:\ArbetenSokta_public` (`github-public`). GitHub är en
+tredje plats, en kopia av repot.
+
+![Förhållandet mellan worktree och repo: repot är historiken i .git, worktree är arbetskopian per gren](bilder/Worktree_Repo.jpg)
+
 ### Skapa den andra mappen (görs en gång)
 
 I terminalen, i huvudmappen, medan du står på `main`:

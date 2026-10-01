@@ -84,6 +84,8 @@ en står på.
    Try running Pull first"*. På `main` ändras inget: den har ingen
    uppströmsgren, så en vanlig push avvisas fortfarande där.
 
+   ![Cursor: Commit och Sync Changes fungerar som vanligt på grenen github-public](bilder/ny_git_worktree_skapad_pa_D_bild4_pusha_som_vanligt.jpg)
+
 5. **Titta efteråt:** filen syns på
    [github.com/kentlundgren/ArbetenSokta/tree/public](https://github.com/kentlundgren/ArbetenSokta/tree/public).
    GitHub Pages bygger om grenen `public` på någon minut

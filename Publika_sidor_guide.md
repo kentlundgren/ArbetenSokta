@@ -76,6 +76,14 @@ en står på.
    git commit -m "<vad och varför>"
    git push origin github-public:public
    ```
+   **Sync Changes-knappen i Cursor fungerar också**, eftersom repot har
+   `push.default = upstream` (`git config --local push.default upstream`,
+   inställt 2026-10-01). Utan den inställningen vägrar git en vanlig `git push`
+   här, eftersom den lokala grenen heter `github-public` och fjärrgrenen
+   `public`. Då visar Cursor det missvisande felet *"Can't push refs to remote.
+   Try running Pull first"*. På `main` ändras inget: den har ingen
+   uppströmsgren, så en vanlig push avvisas fortfarande där.
+
 5. **Titta efteråt:** filen syns på
    [github.com/kentlundgren/ArbetenSokta/tree/public](https://github.com/kentlundgren/ArbetenSokta/tree/public).
    GitHub Pages bygger om grenen `public` på någon minut
@@ -130,6 +138,7 @@ inte.
 |---|---|---|
 | `fatal: 'github-public' is already used by worktree at ...` | Grenen är redan utcheckad i den andra mappen. | Det är ett skydd. Arbeta i den andra mappen i stället. |
 | `behind 1` / `non-fast-forward` | `public` på GitHub har nyare commits. | `git pull --ff-only` i den andra mappen, pusha sedan. |
+| `Can't push refs to remote. Try running "Pull" first` i Cursor | Vanlig push/Sync utan rätt inställning: grenen heter `github-public`, fjärrgrenen `public`. | Kör `git config --local push.default upstream` en gång (eller pusha med `git push origin github-public:public`). |
 | `SPÄRR: ... blockerad` från hooken | En fil saknas på vitlistan, eller fel gren pushas. | Lägg filen i `ALLOWED_FILES`, pusha `github-public:public`. |
 | Fildatum blev dagens datum i huvudmappen | Någon gjorde `git checkout` mellan grenarna där. | Gå tillbaka till `main` och återställ datumen från git-historiken. Använd framöver den andra mappen. |
 

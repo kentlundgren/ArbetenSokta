@@ -66,6 +66,11 @@ en står på.
    står i `ALLOWED_FILES`. Lägg en rad per fil i *båda* kopiorna:
    `.git/hooks/pre-push` (den aktiva) och `.githooks/pre-push` (referenskopian i
    huvudmappen). Gör det **före** pushen, annars blockeras den.
+   Så här ser vitlistan ut i hook-filen (nya filer har lagts till längst upp i
+   listan, markerade med grönt i Cursors jämförelsevy):
+
+   ![Vitlistan ALLOWED_FILES i pre-push-hooken, med nya filer markerade](bilder/godkanda_public_filer_bilder.jpg)
+
 3. **Kontrollera innehållet** (se avsnitt 6): inga personuppgifter, inga
    kontaktpersoner, inget från `Intervju/`.
 4. **Committa och pusha från den andra mappen:**

@@ -228,6 +228,14 @@ sorteringen på ändringsdatum blir missvisande.
 `.git`) kan ha flera mappar utcheckade samtidigt, en per gren. Huvudmappen
 står kvar på `main` och rörs aldrig. `github-public` får en egen mapp bredvid.
 
+**Vad är en worktree?** En vanlig **mapp på din dator** med de utcheckade
+filerna för en gren, i det här fallet `D:\ArbetenSokta_public` för
+`github-public`. Den ligger utanför GitHub. Mappen har ingen egen kopia av
+repot, bara en pekare till huvudrepots `.git`, så historik, grenar och hookar
+delas. Huvudmappen är själv också en worktree. `git worktree list` visar dem:
+
+![git worktree list visar huvudmappen på main och D:\ArbetenSokta_public på github-public](bilder/Lista_de_worktree_som_finns.jpg)
+
 **Receptet, steg för steg** (kommandona körs i terminalen i projektets
 huvudmapp, medan du står på `main`):
 

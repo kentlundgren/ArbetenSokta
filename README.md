@@ -4,12 +4,10 @@ Det här publika repot innehåller enstaka, medvetet utvalda filer ur ett annars
 privat projekt (jobbansökningar, CV, personlighetstester). Namnet `ArbetenSokta`
 är ett arv från det ursprungsprojektet. De allra flesta filerna där ska aldrig
 bli publika, och kan tekniskt inte pushas hit, bara de filer som explicit valts
-ut hamnar här. Just nu är det tre: en Claude Skill som tar bort tecken på
-AI-genererad text ("humanizer"), en sida med en delmängd av sökta jobb
-redovisade till Arbetsförmedlingen, och en sida om projektekonomi vid en
-medicinsk fakultet – typfall i anslagsuppföljning, en presentation av Kent
-Lundgren som söker en ekonomtjänst där, och en liten kalkyl för om ett
-forskningsprojekt ligger i fas. Fler kan läggas till, se
+ut hamnar här. Just nu är det två: en Claude Skill som tar bort tecken på
+AI-genererad text ("humanizer") och en sida med en delmängd av sökta jobb
+redovisade till Arbetsförmedlingen. En tredje, en sida om projektekonomi vid en
+medicinsk fakultet, togs bort 2026-10-01 (se Innehåll). Fler kan läggas till, se
 ["Lägga till fler publika filer"](#lägga-till-fler-publika-filer) nedan.
 
 I augusti 2026 gick det ändå fel en gång: den privata `main`-grenen råkade
@@ -48,16 +46,13 @@ fångade det, och hur det rättades finns dokumenterat längst ned – se
   · [Tidigare designprototyp som Claude-artifact →](https://claude.ai/code/artifact/f89133fd-1950-4a96-8587-d93dfafa3e7e)
   (kräver att Kent delat den, se "Om Claude-artifacts" i teknik-modalen på
   live-sidan)
-- [`forskningsekonomi/`](forskningsekonomi/) – en sida om projektekonomi vid en
-  medicinsk fakultet, med fyra ingångar: **tre typfall** i anslagsuppföljning
-  (överskott mot återbetalning, bemanning som kostar mer än anslaget bär, någon
-  som vill flytta en kostnad), med fem reflexer och ett snabbtest – generaliserat
-  ur övningscase, inga verkliga personer eller belopp; **en presentation av Kent
-  Lundgren** i fyra delar; **sex skäl** till varför han skulle trivas med
-  [ekonomtjänsten vid Medicinska institutionskansliet i Malmö](https://vakanser.se/jobb/ekonom+till+medicinska+institutionskansliet+i+malmo+3/);
-  och **en liten kalkyl** – "ligger projektet i fas?". Se
-  [`forskningsekonomi/README.md`](forskningsekonomi/README.md) ·
-  [live-sidan →](https://kentlundgren.github.io/ArbetenSokta/forskningsekonomi/)
+- ~~`forskningsekonomi/`~~ – **borttagen 2026-10-01.** En sida om
+  projektekonomi vid en medicinsk fakultet (typfall i anslagsuppföljning, en
+  presentation av Kent Lundgren och en liten kalkyl). Kent beslutade att ta
+  bort den, och Claude (Anthropics AI-assistent) hjälpte honom samma dag att
+  ta bort de fyra filerna (`index.html`, `script.js`, `style.css`,
+  `README.md`) från den publika grenen i ett enda commit. Sidan är inte längre
+  nåbar på GitHub Pages. Filerna finns kvar i repots tidigare historik.
 
 ## Använda humanizer-skillet på vilken text som helst
 
